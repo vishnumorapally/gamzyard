@@ -16,6 +16,14 @@ import { MancalaGame } from '../../games/mancala/MancalaGame';
 import { TriviaGame } from '../../games/trivia/TriviaGame';
 import { WordClashGame } from '../../games/wordclash/WordClashGame';
 import { RPSGame } from '../../games/rps/RPSGame';
+import { HandCricketGame } from '../../games/handcricket/HandCricketGame';
+import { RPSLSGame } from '../../games/rpsls/RPSLSGame';
+import { NimGame } from '../../games/nim/NimGame';
+import { MatchstickGame } from '../../games/matchstick/MatchstickGame';
+import { CoinTossGame } from '../../games/cointoss/CoinTossGame';
+import { OddEvenGame } from '../../games/oddeven/OddEvenGame';
+import { HigherLowerGame } from '../../games/higherlower/HigherLowerGame';
+import { GuessNumberGame } from '../../games/guessthenumber/GuessNumberGame';
 import { ChatBox } from './ChatBox';
 import { sound } from '../../services/sound';
 import { DEFAULT_AVATARS } from '../../services/storage';
@@ -215,6 +223,70 @@ export const GameShell: React.FC<GameShellProps> = ({
         )}
         {gameId === 'rps-strike' && (
           <RPSGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'hand-cricket' && (
+          <HandCricketGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'rpsls' && (
+          <RPSLSGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'nim' && (
+          <NimGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'matchstick-puzzle' && (
+          <MatchstickGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'coin-toss' && (
+          <CoinTossGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'odd-even' && (
+          <OddEvenGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'higher-lower' && (
+          <HigherLowerGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'guess-number' && (
+          <GuessNumberGame
             mode={mode}
             botDifficulty={botDifficulty}
             multiplayerData={multiplayerData}

@@ -13,7 +13,9 @@ class GameManager {
     const games = [
       'tic-tac-toe', 'connect-four', 'chess', 'checkers', 'battleship',
       'othello', 'dots-and-boxes', 'gomoku', 'memory-match', 'mancala',
-      'cyber-trivia', 'word-clash', 'rps-strike'
+      'cyber-trivia', 'word-clash', 'rps-strike',
+      'hand-cricket', 'rpsls', 'nim', 'matchstick-puzzle',
+      'coin-toss', 'odd-even', 'higher-lower', 'guess-number'
     ];
     games.forEach(g => this.matchmakingQueues.set(g, []));
   }

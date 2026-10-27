@@ -628,6 +628,266 @@ export const AnimatedGameArtwork: React.FC<AnimatedGameArtworkProps> = ({ gameEn
           </svg>
         </div>
       )}
+
+      {/* 14. HAND CRICKET ANIMATION */}
+      {gameEngineId === 'hand-cricket' && (
+        <div className="w-full h-full relative flex items-center justify-center overflow-hidden">
+          <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:16px_16px]" />
+          <svg className="w-full h-full max-h-[160px]" viewBox="0 0 280 160" fill="none">
+            <defs>
+              <filter id="cricketGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="5" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+            {/* Pitch Oval */}
+            <ellipse cx="140" cy="115" rx="110" ry="28" fill="#064e3b" stroke="#10b981" strokeWidth="1.5" opacity="0.6" />
+            <rect x="100" y="100" width="80" height="30" rx="4" fill="#047857" opacity="0.8" />
+
+            {/* Wickets */}
+            <line x1="130" y1="85" x2="130" y2="115" stroke="#fcd34d" strokeWidth="3" />
+            <line x1="140" y1="85" x2="140" y2="115" stroke="#fcd34d" strokeWidth="3" />
+            <line x1="150" y1="85" x2="150" y2="115" stroke="#fcd34d" strokeWidth="3" />
+            <line x1="126" y1="84" x2="154" y2="84" stroke="#f59e0b" strokeWidth="3" />
+
+            {/* Floating Cricket Bat */}
+            <g className="animate-bounce" style={{ animationDuration: '2.5s' }} transform="translate(60, 40) rotate(-25)">
+              <rect x="0" y="0" width="16" height="55" rx="4" fill="#d97706" stroke="#fbbf24" strokeWidth="1.5" />
+              <rect x="5" y="55" width="6" height="25" rx="2" fill="#78350f" />
+            </g>
+
+            {/* Glowing Cricket Ball */}
+            <g className="animate-ping" style={{ animationDuration: '2s', transformOrigin: '190px 70px' }}>
+              <circle cx="190" cy="70" r="12" fill="#ef4444" opacity="0.3" filter="url(#cricketGlow)" />
+            </g>
+            <circle cx="190" cy="70" r="10" fill="#dc2626" stroke="#fca5a5" strokeWidth="1.5" />
+
+            {/* Boundary Six text */}
+            <text x="220" y="45" fontSize="22" fontWeight="black" fill="#10b981" filter="url(#cricketGlow)" className="animate-pulse">
+              6!
+            </text>
+          </svg>
+        </div>
+      )}
+
+      {/* 15. RPSLS ANIMATION */}
+      {gameEngineId === 'rpsls' && (
+        <div className="w-full h-full relative flex items-center justify-center overflow-hidden">
+          <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#a855f7_1px,transparent_1px)] [background-size:16px_16px]" />
+          <svg className="w-full h-full max-h-[160px]" viewBox="0 0 280 160" fill="none">
+            <defs>
+              <filter id="rpslsGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="5" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+            {/* Center Pentagon Star */}
+            <circle cx="140" cy="80" r="45" fill="#3b0764" stroke="#a855f7" strokeWidth="1.5" opacity="0.4" />
+            <polygon points="140,40 180,68 165,115 115,115 100,68" stroke="#c084fc" strokeWidth="1.5" strokeDasharray="3 3" fill="none" />
+
+            {/* 5 Icons positioned at pentagon vertices */}
+            <text x="140" y="38" fontSize="20" textAnchor="middle" className="animate-bounce" style={{ animationDuration: '3s' }}>🪨</text>
+            <text x="188" y="72" fontSize="20" textAnchor="middle" className="animate-bounce" style={{ animationDuration: '2.7s' }}>📄</text>
+            <text x="170" y="128" fontSize="20" textAnchor="middle" className="animate-bounce" style={{ animationDuration: '3.2s' }}>✂️</text>
+            <text x="110" y="128" fontSize="20" textAnchor="middle" className="animate-bounce" style={{ animationDuration: '2.5s' }}>🦎</text>
+            <text x="92" y="72" fontSize="20" textAnchor="middle" className="animate-bounce" style={{ animationDuration: '2.9s' }}>🖖</text>
+
+            <circle cx="140" cy="80" r="10" fill="#a855f7" opacity="0.5" filter="url(#rpslsGlow)" className="animate-ping" style={{ animationDuration: '2s' }} />
+          </svg>
+        </div>
+      )}
+
+      {/* 16. NIM STICKS ANIMATION */}
+      {gameEngineId === 'nim' && (
+        <div className="w-full h-full relative flex items-center justify-center overflow-hidden">
+          <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#06b6d4_1px,transparent_1px)] [background-size:16px_16px]" />
+          <svg className="w-full h-full max-h-[160px]" viewBox="0 0 280 160" fill="none">
+            <defs>
+              <filter id="nimGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="4" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+            {/* Row 1 (3 Sticks) */}
+            {[115, 140, 165].map((x, i) => (
+              <rect key={i} x={x} y="25" width="8" height="28" rx="4" fill="#06b6d4" filter="url(#nimGlow)" className="animate-pulse" />
+            ))}
+
+            {/* Row 2 (5 Sticks) */}
+            {[90, 115, 140, 165, 190].map((x, i) => (
+              <rect key={i} x={x} y="65" width="8" height="32" rx="4" fill="#a855f7" filter="url(#nimGlow)" className="animate-pulse" style={{ animationDelay: '0.3s' }} />
+            ))}
+
+            {/* Row 3 (7 Sticks) */}
+            {[65, 90, 115, 140, 165, 190, 215].map((x, i) => (
+              <rect key={i} x={x} y="110" width="8" height="32" rx="4" fill="#f59e0b" filter="url(#nimGlow)" className="animate-pulse" style={{ animationDelay: '0.6s' }} />
+            ))}
+
+            {/* Laser Grab Beam */}
+            <line x1="165" y1="15" x2="165" y2="55" stroke="#f43f5e" strokeWidth="2" strokeDasharray="3 3" className="animate-ping" style={{ animationDuration: '2s' }} />
+          </svg>
+        </div>
+      )}
+
+      {/* 17. MATCHSTICK PUZZLE ANIMATION */}
+      {gameEngineId === 'matchstick-puzzle' && (
+        <div className="w-full h-full relative flex items-center justify-center overflow-hidden">
+          <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#f59e0b_1px,transparent_1px)] [background-size:16px_16px]" />
+          <svg className="w-full h-full max-h-[160px]" viewBox="0 0 280 160" fill="none">
+            <defs>
+              <filter id="matchGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="5" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+
+            {/* Wooden Frame */}
+            <rect x="40" y="35" width="200" height="90" rx="16" fill="#1c0d02" stroke="#d97706" strokeWidth="2" />
+
+            {/* Matchstick Equation "6 + 4 = 4" */}
+            <text x="140" y="90" fontSize="34" font-family="monospace" fontWeight="black" textAnchor="middle" fill="#fbbf24" filter="url(#matchGlow)">
+              6 + 4 = 4
+            </text>
+
+            {/* Animated Floating Matchstick with Red Sulfur Tip */}
+            <g className="animate-bounce" style={{ animationDuration: '2s' }}>
+              <rect x="180" y="25" width="30" height="5" rx="2" fill="#d97706" />
+              <circle cx="212" cy="27" r="4" fill="#ef4444" filter="url(#matchGlow)" />
+            </g>
+
+            {/* Match Flame Sparkles */}
+            <text x="65" y="55" fontSize="14" className="animate-pulse">🔥</text>
+            <text x="215" y="55" fontSize="14" className="animate-pulse">🔥</text>
+          </svg>
+        </div>
+      )}
+
+      {/* 18. COIN TOSS CHALLENGE ANIMATION */}
+      {gameEngineId === 'coin-toss' && (
+        <div className="w-full h-full relative flex items-center justify-center overflow-hidden">
+          <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#eab308_1px,transparent_1px)] [background-size:16px_16px]" />
+          <svg className="w-full h-full max-h-[160px]" viewBox="0 0 280 160" fill="none">
+            <defs>
+              <filter id="coinGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="6" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+
+            {/* Orbit rings */}
+            <ellipse cx="140" cy="80" rx="75" ry="30" stroke="#ca8a04" strokeWidth="1.5" strokeDasharray="4 4" fill="none" transform="rotate(-15 140 80)" />
+
+            {/* Glowing 3D Coin in center */}
+            <g className="animate-bounce" style={{ animationDuration: '2.5s' }}>
+              <circle cx="140" cy="80" r="32" fill="#eab308" stroke="#fef08a" strokeWidth="3" filter="url(#coinGlow)" />
+              <circle cx="140" cy="80" r="26" fill="#ca8a04" stroke="#fde047" strokeWidth="1.5" />
+              <text x="140" y="89" fontSize="26" textAnchor="middle">👑</text>
+            </g>
+
+            {/* Floating Sparkle Coins */}
+            <text x="70" y="55" fontSize="16" className="animate-pulse">🪙</text>
+            <text x="210" y="115" fontSize="16" className="animate-pulse" style={{ animationDelay: '0.8s' }}>🪙</text>
+          </svg>
+        </div>
+      )}
+
+      {/* 19. ODD OR EVEN ANIMATION */}
+      {gameEngineId === 'odd-even' && (
+        <div className="w-full h-full relative flex items-center justify-center overflow-hidden">
+          <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:16px_16px]" />
+          <svg className="w-full h-full max-h-[160px]" viewBox="0 0 280 160" fill="none">
+            <defs>
+              <filter id="oddGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="5" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+
+            {/* Left Hand Card (3 Fingers) */}
+            <g className="animate-bounce" style={{ animationDuration: '2.8s' }}>
+              <rect x="55" y="40" width="55" height="75" rx="12" fill="#0f172a" stroke="#38bdf8" strokeWidth="2" filter="url(#oddGlow)" />
+              <text x="82" y="85" fontSize="28" textAnchor="middle">🤟</text>
+              <text x="82" y="105" fontSize="9" textAnchor="middle" fill="#7dd3fc" fontWeight="bold">3 (ODD)</text>
+            </g>
+
+            {/* Plus Operator */}
+            <circle cx="140" cy="78" r="14" fill="#1e293b" stroke="#38bdf8" strokeWidth="1.5" />
+            <text x="140" y="84" fontSize="18" textAnchor="middle" fill="#38bdf8" fontWeight="black">+</text>
+
+            {/* Right Hand Card (2 Fingers) */}
+            <g className="animate-bounce" style={{ animationDuration: '2.8s', animationDelay: '0.6s' }}>
+              <rect x="170" y="40" width="55" height="75" rx="12" fill="#0f172a" stroke="#a855f7" strokeWidth="2" filter="url(#oddGlow)" />
+              <text x="197" y="85" fontSize="28" textAnchor="middle">✌️</text>
+              <text x="197" y="105" fontSize="9" textAnchor="middle" fill="#d8b4fe" fontWeight="bold">2 (EVEN)</text>
+            </g>
+          </svg>
+        </div>
+      )}
+
+      {/* 20. HIGHER OR LOWER ANIMATION */}
+      {gameEngineId === 'higher-lower' && (
+        <div className="w-full h-full relative flex items-center justify-center overflow-hidden">
+          <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#0284c7_1px,transparent_1px)] [background-size:16px_16px]" />
+          <svg className="w-full h-full max-h-[160px]" viewBox="0 0 280 160" fill="none">
+            <defs>
+              <filter id="hlGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="5" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+
+            {/* Playing Card 1 (7 of Spades) */}
+            <rect x="60" y="38" width="55" height="80" rx="10" fill="#ffffff" stroke="#e2e8f0" strokeWidth="2" filter="url(#hlGlow)" />
+            <text x="70" y="55" fontSize="13" fontWeight="bold" fill="#0f172a">7</text>
+            <text x="87" y="85" fontSize="26" textAnchor="middle" fill="#0f172a">♠</text>
+
+            {/* Arrow indicators in center */}
+            <g className="animate-bounce" style={{ animationDuration: '2s' }}>
+              <polygon points="140,55 150,70 130,70" fill="#10b981" filter="url(#hlGlow)" />
+              <polygon points="140,105 150,90 130,90" fill="#ef4444" filter="url(#hlGlow)" />
+            </g>
+
+            {/* Playing Card 2 (King of Hearts) */}
+            <rect x="165" y="38" width="55" height="80" rx="10" fill="#ffffff" stroke="#38bdf8" strokeWidth="2" filter="url(#hlGlow)" />
+            <text x="175" y="55" fontSize="13" fontWeight="bold" fill="#dc2626">K</text>
+            <text x="192" y="85" fontSize="26" textAnchor="middle" fill="#dc2626">♥</text>
+          </svg>
+        </div>
+      )}
+
+      {/* 21. GUESS THE NUMBER ANIMATION */}
+      {gameEngineId === 'guess-number' && (
+        <div className="w-full h-full relative flex items-center justify-center overflow-hidden">
+          <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#8b5cf6_1px,transparent_1px)] [background-size:16px_16px]" />
+          <svg className="w-full h-full max-h-[160px]" viewBox="0 0 280 160" fill="none">
+            <defs>
+              <filter id="radarGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="5" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+
+            {/* Radar Scope Rings */}
+            <circle cx="140" cy="80" r="55" stroke="#7c3aed" strokeWidth="1.5" strokeDasharray="3 3" fill="none" opacity="0.6" />
+            <circle cx="140" cy="80" r="35" stroke="#8b5cf6" strokeWidth="1.5" fill="none" opacity="0.8" />
+            <circle cx="140" cy="80" r="15" stroke="#c4b5fd" strokeWidth="1.5" fill="none" />
+
+            {/* Crosshairs */}
+            <line x1="80" y1="80" x2="200" y2="80" stroke="#a78bfa" strokeWidth="1" strokeDasharray="2 2" />
+            <line x1="140" y1="20" x2="140" y2="140" stroke="#a78bfa" strokeWidth="1" strokeDasharray="2 2" />
+
+            {/* Center Target Hologram Number */}
+            <circle cx="140" cy="80" r="22" fill="#4c1d95" stroke="#a78bfa" strokeWidth="2" filter="url(#radarGlow)" />
+            <text x="140" y="88" fontSize="20" font-family="monospace" fontWeight="black" textAnchor="middle" fill="#f5f3ff" className="animate-pulse">
+              ??
+            </text>
+
+            {/* Range Badges */}
+            <text x="50" y="85" fontSize="12" fontWeight="black" fill="#38bdf8">1</text>
+            <text x="215" y="85" fontSize="12" fontWeight="black" fill="#f43f5e">100</text>
+          </svg>
+        </div>
+      )}
     </div>
   );
 };

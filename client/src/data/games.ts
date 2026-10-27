@@ -236,6 +236,142 @@ export const CANVA_GAMES: CanvaGameItem[] = [
       'Titan Rock crushes Blades, Quantum Paper envelops Rock, Laser Blades slice Paper.',
       '12-second round timer for quick tactical clashes.'
     ]
+  },
+  {
+    id: 'hand-cricket',
+    gameEngineId: 'hand-cricket',
+    title: 'Hand Cricket',
+    category: 'Party',
+    categories: ['Party', 'Arcade', 'Multiplayer'],
+    artClass: 'art-cricket',
+    artSymbol: '🏏',
+    meta: '2 Players · 2 Overs · Bat & Bowl',
+    quickSubtitle: 'Throw numbers & chase the target',
+    description: 'The legendary schoolroom Hand Cricket duel! Score runs by matching your batter numbers, bowl out your rival, and chase down the target score.',
+    rules: [
+      'Pick 1 to 6 on each ball.',
+      'Same number = Wicket OUT! Different number = Batter scores runs.',
+      'Chase the target score in Innings 2 to win!'
+    ]
+  },
+  {
+    id: 'rpsls',
+    gameEngineId: 'rpsls',
+    title: 'RPS Lizard Spock',
+    category: 'Arcade',
+    categories: ['Arcade', 'Party', 'Multiplayer'],
+    artClass: 'art-rpsls',
+    artSymbol: '🖖',
+    meta: '2 Players · Best of 5 · 5-Way Weapons',
+    quickSubtitle: 'Rock, Paper, Scissors, Lizard, Spock',
+    description: 'The enhanced 5-way tactical battle made famous by Sheldon Cooper! Spock vaporizes Rock, Lizard poisons Spock, and Scissors decapitates Lizard in a race to 3 wins.',
+    rules: [
+      'First to 3 points wins.',
+      'Rock crushes Scissors & Lizard; Paper covers Rock & disproves Spock; Scissors cuts Paper & decapitates Lizard.',
+      'Lizard poisons Spock & eats Paper; Spock smashes Scissors & vaporizes Rock.'
+    ]
+  },
+  {
+    id: 'nim',
+    gameEngineId: 'nim',
+    title: 'Nim — Cyber Sticks',
+    category: 'Strategy',
+    categories: ['Strategy', 'Puzzle', 'Multiplayer'],
+    artClass: 'art-nim',
+    artSymbol: '🥢',
+    meta: '2 Players · Heaps 3-5-7 · Mathematical Duel',
+    quickSubtitle: 'Take sticks & seize the last one',
+    description: 'The ancient mathematical strategy duel of heap reduction! Take any number of sticks from a single row. The master who seizes the final stick wins.',
+    rules: [
+      'Pick any number of sticks from a single row.',
+      'Normal play: whoever takes the very last stick wins!',
+      '30-second move timer per turn.'
+    ]
+  },
+  {
+    id: 'matchstick-puzzle',
+    gameEngineId: 'matchstick-puzzle',
+    title: 'Matchstick Puzzle',
+    category: 'Puzzle',
+    categories: ['Puzzle', 'Trivia', 'Multiplayer'],
+    artClass: 'art-matchstick',
+    artSymbol: '🔥',
+    meta: '2 Players · 3 Brain Rounds · 1-Move Fix',
+    quickSubtitle: 'Move 1 matchstick to fix the equation',
+    description: 'Ignite your brain! Analyze incorrect digital equations and find the exact single matchstick relocation that restores mathematical harmony.',
+    rules: [
+      'Move exactly 1 matchstick to make the equation true.',
+      'Race against the 25s timer for speed bonuses.',
+      'Highest points across 3 puzzles wins!'
+    ]
+  },
+  {
+    id: 'coin-toss',
+    gameEngineId: 'coin-toss',
+    title: 'Coin Toss Challenge',
+    category: 'Arcade',
+    categories: ['Arcade', 'Party', 'Multiplayer'],
+    artClass: 'art-cointoss',
+    artSymbol: '🪙',
+    meta: '2 Players · Best of 5 · 3D Physics Flip',
+    quickSubtitle: 'Heads or Tails 3D prediction duel',
+    description: 'Step into the cyber golden vault! Call Heads or Tails, launch the spinning 3D coin into orbit, and be the first to land 3 successful predictions.',
+    rules: [
+      'Pick Heads 👑 or Tails 🐉.',
+      'Watch the 3D coin tumble and land in the chamber.',
+      'First player to 3 correct calls wins!'
+    ]
+  },
+  {
+    id: 'odd-even',
+    gameEngineId: 'odd-even',
+    title: 'Odd or Even',
+    category: 'Party',
+    categories: ['Party', 'Arcade', 'Multiplayer'],
+    artClass: 'art-oddeven',
+    artSymbol: '⚖️',
+    meta: '2 Players · 1-5 Fingers · Parity Showdown',
+    quickSubtitle: 'Throw fingers & claim the sum',
+    description: 'The fast-action finger duel! Choose your parity, throw 1 to 5 fingers simultaneously, and score whenever the combined sum matches your call.',
+    rules: [
+      'Call ODD or EVEN.',
+      'Both players throw 1 to 5 fingers.',
+      'If the sum matches your call, you score! First to 3 wins.'
+    ]
+  },
+  {
+    id: 'higher-lower',
+    gameEngineId: 'higher-lower',
+    title: 'Higher or Lower',
+    category: 'Trivia',
+    categories: ['Trivia', 'Puzzle', 'Party', 'Multiplayer'],
+    artClass: 'art-higherlower',
+    artSymbol: '📈',
+    meta: '2 Players · 5 Card Rounds · Streak Bonus',
+    quickSubtitle: 'Predict next card value & build streaks',
+    description: 'The high-stakes cyber card prediction duel! Forecast whether the next card drawn will be Higher or Lower. Chain correct guesses for combo multipliers.',
+    rules: [
+      'Predict if the next drawn card is Higher or Lower.',
+      'Ace is 1, King is 13.',
+      'Consecutive correct calls earn 2x and 3x streak multipliers!'
+    ]
+  },
+  {
+    id: 'guess-number',
+    gameEngineId: 'guess-number',
+    title: 'Guess the Number',
+    category: 'Puzzle',
+    categories: ['Puzzle', 'Strategy', 'Multiplayer'],
+    artClass: 'art-guessnumber',
+    artSymbol: '🎯',
+    meta: '2 Players · 1-100 Radar · Shrinking Bounds',
+    quickSubtitle: 'Narrow down the secret number',
+    description: 'A tense code-cracking battle! Take turns guessing a secret number between 1 and 100 as the bounds shrink in real-time. Guess the exact number to win.',
+    rules: [
+      'Take turns guessing the secret number [1 - 100].',
+      'Hints narrow the valid range on every guess.',
+      'The player who strikes the exact number wins!'
+    ]
   }
 ];
 
@@ -486,6 +622,158 @@ export const GAMES: GameMetadata[] = [
       'First to 3 points wins the match.',
       'Titan Rock crushes Blades, Quantum Paper envelops Rock, Laser Blades slice Paper.',
       '12-second round timer for quick tactical clashes.'
+    ]
+  },
+  {
+    id: 'hand-cricket',
+    title: 'Hand Cricket',
+    tagline: 'Classic 2-Innings Bat & Bowl Clash',
+    category: 'Quick',
+    difficulty: 'Casual',
+    players: '1 - 2 Players',
+    avgTime: '3-6 min',
+    iconName: 'Trophy',
+    gradient: 'from-emerald-500/20 to-transparent',
+    accentColor: '#10b981',
+    featured: true,
+    description: 'Score runs by matching your batter numbers, bowl out your rival, and chase down the target score.',
+    rules: [
+      'Pick 1 to 6 on each ball.',
+      'Same number = Wicket OUT! Different number = Batter scores runs.',
+      'Chase the target score in Innings 2 to win!'
+    ]
+  },
+  {
+    id: 'rpsls',
+    title: 'RPS Lizard Spock',
+    tagline: 'The Ultimate 5-Way Tactical Arena',
+    category: 'Quick',
+    difficulty: 'Casual',
+    players: '1 - 2 Players',
+    avgTime: '2-5 min',
+    iconName: 'Swords',
+    gradient: 'from-purple-500/20 to-transparent',
+    accentColor: '#a855f7',
+    featured: true,
+    description: 'Rock, Paper, Scissors, Lizard, Spock! 5 weapons, 10 interactions, and simultaneous holographic reveals.',
+    rules: [
+      'First to 3 points wins the match.',
+      'Rock crushes Scissors & Lizard; Paper covers Rock & disproves Spock; Scissors cuts Paper & decapitates Lizard.',
+      'Lizard poisons Spock & eats Paper; Spock smashes Scissors & vaporizes Rock.'
+    ]
+  },
+  {
+    id: 'nim',
+    title: 'Nim — Cyber Sticks',
+    tagline: 'Mathematical Stick Reduction Duel',
+    category: 'Strategy',
+    difficulty: 'Hardcore',
+    players: '1 - 2 Players',
+    avgTime: '3-7 min',
+    iconName: 'Sparkles',
+    gradient: 'from-cyan-500/20 to-transparent',
+    accentColor: '#06b6d4',
+    featured: true,
+    description: 'The ancient mathematical game of heap reduction. Choose any row and take sticks. The player who takes the last stick wins!',
+    rules: [
+      'Pick any number of sticks from a single row.',
+      'Normal play: whoever takes the very last stick wins!',
+      '30-second move timer per turn.'
+    ]
+  },
+  {
+    id: 'matchstick-puzzle',
+    title: 'Matchstick Puzzle',
+    tagline: '1-Move Digital Equation Brain Teaser',
+    category: 'Tactical',
+    difficulty: 'Intermediate',
+    players: '1 - 2 Players',
+    avgTime: '3-6 min',
+    iconName: 'Flame',
+    gradient: 'from-amber-500/20 to-transparent',
+    accentColor: '#f59e0b',
+    featured: true,
+    description: 'Move exactly 1 matchstick to restore mathematical balance to broken digital equations.',
+    rules: [
+      'Move exactly 1 matchstick to make the equation true.',
+      'Race against the 25s timer for speed bonuses.',
+      'Highest points across 3 puzzles wins!'
+    ]
+  },
+  {
+    id: 'coin-toss',
+    title: 'Coin Toss Challenge',
+    tagline: '3D Physics Coin Prediction Arena',
+    category: 'Quick',
+    difficulty: 'Casual',
+    players: '1 - 2 Players',
+    avgTime: '2-4 min',
+    iconName: 'Coins',
+    gradient: 'from-yellow-500/20 to-transparent',
+    accentColor: '#eab308',
+    featured: true,
+    description: 'Launch the spinning 3D coin into orbit! Call Heads or Tails and be the first to reach 3 correct predictions.',
+    rules: [
+      'Pick Heads 👑 or Tails 🐉.',
+      'Watch the 3D coin tumble and land in the chamber.',
+      'First player to 3 correct calls wins!'
+    ]
+  },
+  {
+    id: 'odd-even',
+    title: 'Odd or Even',
+    tagline: 'Finger Throw Parity Showdown',
+    category: 'Quick',
+    difficulty: 'Casual',
+    players: '1 - 2 Players',
+    avgTime: '2-5 min',
+    iconName: 'Zap',
+    gradient: 'from-blue-500/20 to-transparent',
+    accentColor: '#3b82f6',
+    featured: true,
+    description: 'Call your parity, throw 1 to 5 fingers simultaneously, and score points whenever the combined sum matches your call.',
+    rules: [
+      'Call ODD or EVEN.',
+      'Both players throw 1 to 5 fingers.',
+      'If the sum matches your call, you score! First to 3 wins.'
+    ]
+  },
+  {
+    id: 'higher-lower',
+    title: 'Higher or Lower',
+    tagline: 'High-Stakes Card Probability Clash',
+    category: 'Quick',
+    difficulty: 'Casual',
+    players: '1 - 2 Players',
+    avgTime: '3-6 min',
+    iconName: 'ArrowUp',
+    gradient: 'from-sky-500/20 to-transparent',
+    accentColor: '#0284c7',
+    featured: true,
+    description: 'Forecast whether the next drawn card will be Higher or Lower. Chain correct calls for 2x and 3x streak combo bonuses.',
+    rules: [
+      'Predict if the next drawn card is Higher or Lower.',
+      'Ace is 1, King is 13.',
+      'Consecutive correct calls earn 2x and 3x streak multipliers!'
+    ]
+  },
+  {
+    id: 'guess-number',
+    title: 'Guess the Number',
+    tagline: '1-100 Codebreaker Radar Duel',
+    category: 'Tactical',
+    difficulty: 'Intermediate',
+    players: '1 - 2 Players',
+    avgTime: '3-7 min',
+    iconName: 'Target',
+    gradient: 'from-purple-500/20 to-transparent',
+    accentColor: '#8b5cf6',
+    featured: true,
+    description: 'Take turns guessing a secret number between 1 and 100 with real-time shrinking radar bounds.',
+    rules: [
+      'Take turns guessing the secret number [1 - 100].',
+      'Hints narrow the valid range on every guess.',
+      'The player who strikes the exact number wins!'
     ]
   }
 ];

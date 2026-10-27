@@ -13,7 +13,15 @@ export type GameId =
   | 'mancala'
   | 'cyber-trivia'
   | 'word-clash'
-  | 'rps-strike';
+  | 'rps-strike'
+  | 'hand-cricket'
+  | 'rpsls'
+  | 'nim'
+  | 'matchstick-puzzle'
+  | 'coin-toss'
+  | 'odd-even'
+  | 'higher-lower'
+  | 'guess-number';
 
 export type GameMode = 'bot' | 'room' | 'match';
 
