@@ -146,6 +146,6 @@ app.get('*', (req, res) => {
   });
 });
 
-server.listen(PORT, () => {
-  console.log(`[Gamzyard Server] Running on http://localhost:${PORT}`);
+server.listen(PORT, '0.0.0.0', () => {
+  console.log(`[Gamzyard Server] Running on http://0.0.0.0:${PORT}`);
 });
