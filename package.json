@@ -1,0 +1,26 @@
+{
+  "name": "gamzyard",
+  "version": "1.0.0",
+  "description": "Gamzyard - Modern Multiplayer & Bot Gaming Hub",
+  "main": "server/index.js",
+  "scripts": {
+    "install:all": "npm install && cd client && npm install",
+    "dev": "concurrently \"node server/index.js\" \"cd client && npm run dev\"",
+    "dev:server": "node server/index.js",
+    "dev:client": "cd client && npm run dev",
+    "build": "cd client && npm install && npm run build",
+    "start": "node server/index.js"
+  },
+  "keywords": ["gaming", "multiplayer", "socket.io", "react", "chess", "connect4", "checkers", "battleship", "tictactoe"],
+  "author": "Gamzyard Team",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "socket.io": "^4.8.1"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

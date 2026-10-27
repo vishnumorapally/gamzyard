@@ -1,0 +1,469 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink: #080b1c;
+  --panel: #151a35;
+  --muted: #a8b0cd;
+  --purple: #a77bff;
+  --cyan: #5be9ed;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  color: #f7f7ff;
+  background: #080b1c;
+  position: relative;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Professional Typography Hierarchy */
+h1, h2, h3, h4, .brand-title, .primary-cta, .secondary-cta, .play-btn, .sign-btn, .promo-btn, .scene-label {
+  font-family: 'Outfit', sans-serif;
+}
+
+.eyebrow, .category-label, .card-meta, .art-symbol {
+  font-family: 'Space Grotesk', 'Space Mono', monospace;
+}
+
+/* Canva Radial Ambient Glows */
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 900px;
+  pointer-events: none;
+  background: radial-gradient(ellipse 43% 35% at 83% 19%, #54339a58, transparent 78%),
+              radial-gradient(ellipse 35% 32% at 8% 44%, #146a8060, transparent 85%);
+  z-index: 0;
+}
+
+.shell {
+  width: min(100% - 48px, 1240px);
+  margin-inline: auto;
+}
+
+@media (max-width: 760px) {
+  .shell {
+    width: min(100% - 28px, 1240px);
+  }
+}
+
+/* Glassmorphism panel */
+.glass {
+  background: rgba(19, 23, 47, 0.79);
+  border: 1px solid rgba(194, 202, 255, 0.13);
+  box-shadow: 0 18px 65px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(20px);
+}
+
+/* Brand mark badge */
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  color: #0c1027;
+  background: linear-gradient(135deg, #66eff1, #b58aff);
+  box-shadow: 0 0 25px rgba(138, 117, 255, 0.45);
+}
+
+/* Eyebrows */
+.eyebrow {
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #75e9ed;
+  font-weight: 700;
+  font-size: 11px;
+}
+
+/* Canva CTAs */
+.primary-cta, .secondary-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 51px;
+  padding: 0 24px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 15px;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+  cursor: pointer;
+}
+
+.primary-cta {
+  color: #10142b;
+  background: #72ecee;
+  box-shadow: 0 10px 32px rgba(80, 219, 229, 0.3);
+  border: 1px solid #72ecee;
+}
+
+.secondary-cta {
+  color: #f5f3ff;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(166, 165, 198, 0.28);
+}
+
+.primary-cta:hover, .secondary-cta:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(141, 118, 246, 0.3);
+}
+
+/* Hero scene floating 3D cards */
+.hero-scene {
+  position: relative;
+  height: 470px;
+  isolation: isolate;
+  cursor: default;
+}
+
+.hero-scene::before {
+  content: "";
+  position: absolute;
+  inset: 13% 10%;
+  background: #834ff4;
+  filter: blur(100px);
+  opacity: 0.3;
+  z-index: -1;
+}
+
+.scene-card {
+  position: absolute;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 24px 65px rgba(0, 0, 0, 0.6);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+  cursor: default;
+}
+
+/* Hero 3D Card Hover Effects (Interactive visual without click action) */
+.scene-main {
+  width: 67%;
+  height: 79%;
+  left: 15%;
+  top: 10%;
+  transform: rotate(-5deg);
+  background: linear-gradient(145deg, #413294, #151d50 72%);
+  padding: 23px;
+  cursor: default;
+}
+
+.scene-main:hover {
+  transform: translateY(-12px) rotate(-1deg) scale(1.03) !important;
+  box-shadow: 0 32px 75px rgba(0, 0, 0, 0.75), 0 0 40px rgba(119, 242, 242, 0.35) !important;
+  border-color: rgba(119, 242, 242, 0.6) !important;
+}
+
+.scene-main::before {
+  content: "";
+  position: absolute;
+  inset: -120%;
+  background: radial-gradient(circle, rgba(114, 236, 238, 0.2) 0%, transparent 60%);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.scene-main::after {
+  content: "✦";
+  position: absolute;
+  font-size: 130px;
+  color: #77f2f2;
+  text-shadow: 0 0 55px #6ff5f4;
+  top: 29%;
+  left: 35%;
+  pointer-events: none;
+}
+
+.scene-top {
+  width: 37%;
+  height: 39%;
+  right: 0;
+  top: 0;
+  transform: rotate(10deg);
+  background: linear-gradient(145deg, #f58977, #873eab);
+  display: grid;
+  place-items: center;
+  font-size: 86px;
+  color: #ffe891;
+  text-shadow: 0 8px 28px #592c82;
+  cursor: default;
+}
+
+.scene-top:hover {
+  transform: translateY(-10px) rotate(14deg) scale(1.08) !important;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 0 0 30px rgba(245, 137, 119, 0.4) !important;
+  border-color: rgba(255, 232, 145, 0.6) !important;
+}
+
+.scene-bottom {
+  width: 38%;
+  height: 37%;
+  left: 0;
+  bottom: 0;
+  transform: rotate(8deg);
+  background: linear-gradient(145deg, #088d9c, #15417f);
+  display: grid;
+  place-items: center;
+  font-size: 92px;
+  color: #b5ffff;
+  text-shadow: 0 0 35px #63ffff;
+  cursor: default;
+}
+
+.scene-bottom:hover {
+  transform: translateY(-10px) rotate(4deg) scale(1.08) !important;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 0 0 30px rgba(8, 141, 156, 0.4) !important;
+  border-color: rgba(181, 255, 255, 0.6) !important;
+}
+
+.scene-label {
+  position: absolute;
+  bottom: 18px;
+  left: 19px;
+  right: 19px;
+  z-index: 2;
+  font-weight: 800;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.scene-label small {
+  display: block;
+  font: 500 10px 'Space Grotesk', monospace;
+  color: #d7cff9;
+  letter-spacing: 0.15em;
+  margin-bottom: 5px;
+}
+
+/* Category Filter Chips */
+.chip-btn {
+  border: 1px solid rgba(133, 138, 184, 0.28);
+  border-radius: 9999px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: 'Outfit', sans-serif;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  white-space: nowrap;
+  outline: none;
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chip-btn-inactive {
+  background: rgba(255, 255, 255, 0.04);
+  color: #c8cbe2;
+}
+
+.chip-btn-inactive:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border-color: rgba(114, 236, 238, 0.5);
+  transform: translateY(-1px);
+}
+
+.chip-btn-active {
+  background: #72ecee;
+  color: #0b1126;
+  border-color: #72ecee;
+  font-weight: 800;
+  box-shadow: 0 0 20px rgba(114, 236, 238, 0.4);
+}
+
+/* Game Card Styles and Hover Effects */
+.game-card {
+  position: relative;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+  will-change: transform;
+  cursor: pointer;
+}
+
+.game-card:hover {
+  transform: translateY(-8px) scale(1.015);
+  border-color: rgba(114, 236, 238, 0.55) !important;
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.65), 0 0 32px rgba(114, 236, 238, 0.22) !important;
+}
+
+.game-card:hover .art-symbol {
+  transform: scale(1.14) rotate(4deg);
+}
+
+.game-card:hover .play-btn {
+  background: #72ecee;
+  color: #0b1126;
+  border-color: #72ecee;
+  box-shadow: 0 4px 18px rgba(114, 236, 238, 0.35);
+}
+
+.game-card:hover .category-label {
+  color: #b58aff !important;
+}
+
+/* Quick Play Card Hover Effects */
+.quick-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+}
+
+.quick-card:hover {
+  transform: translateY(-4px) scale(1.01);
+  border-color: rgba(167, 123, 255, 0.5) !important;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(167, 123, 255, 0.2) !important;
+  background: #20264d !important;
+}
+
+.quick-card:hover .quick-icon {
+  transform: scale(1.12);
+}
+
+/* Game Cards Art Boxes */
+.art {
+  height: 172px;
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+.art::before, .art::after {
+  content: "";
+  position: absolute;
+  border-radius: 24px;
+  transform: rotate(25deg);
+  opacity: 0.54;
+}
+
+.art::before {
+  width: 135px;
+  height: 135px;
+  border: 22px solid rgba(255, 255, 255, 0.4);
+  left: -27px;
+  top: -57px;
+}
+
+.art::after {
+  width: 150px;
+  height: 150px;
+  border: 2px solid rgba(255, 255, 255, 0.53);
+  right: -28px;
+  bottom: -90px;
+}
+
+.art-symbol {
+  position: relative;
+  z-index: 1;
+  font-size: 79px;
+  line-height: 1;
+  font-weight: 800;
+  text-shadow: 0 12px 25px rgba(0, 0, 0, 0.38);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.art-brain { background: linear-gradient(135deg, #be54cc, #56399d); color: #ffe4a9; }
+.art-runner { background: linear-gradient(135deg, #02618f, #352890); color: #69f8ff; }
+.art-word { background: linear-gradient(135deg, #ed8051, #bd345e); color: #ffeab1; }
+.art-logic { background: linear-gradient(135deg, #267b76, #1b395f); color: #b6ffcb; }
+.art-pixel { background: linear-gradient(135deg, #7934ba, #ec5a97); color: #f9e0ff; }
+.art-chess { background: linear-gradient(135deg, #235477, #192950); color: #e4e6fa; }
+.art-fire { background: linear-gradient(135deg, #d33c5e, #881a42); color: #ffe394; }
+
+/* Canva Play Now Button */
+.play-btn {
+  width: 100%;
+  border: 1px solid rgba(125, 136, 187, 0.36);
+  background: rgba(255, 255, 255, 0.04);
+  color: #f7f6ff;
+  border-radius: 10px;
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 800;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.play-btn:hover {
+  background: #a87cff;
+  color: #101229;
+  border-color: #a87cff;
+}
+
+/* Canva Promo section */
+.promo {
+  margin: 28px auto 83px;
+  padding: 47px 56px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+  border-radius: 24px;
+  border: 1px solid rgba(167, 122, 255, 0.45);
+  background: radial-gradient(circle at 75% 60%, rgba(118, 69, 170, 0.47), transparent 42%),
+              linear-gradient(120deg, #23204a, #121b38);
+  box-shadow: 0 18px 60px rgba(5, 6, 24, 0.47);
+}
+
+@media (max-width: 760px) {
+  .promo {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 32px;
+    margin-bottom: 50px;
+  }
+}
+
+/* Utilities */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #080b1c;
+}
+::-webkit-scrollbar-thumb {
+  background: #1f2547;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3c457d;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
