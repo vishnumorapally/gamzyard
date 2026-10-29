@@ -57,6 +57,7 @@ export const App: React.FC = () => {
   const [activeGame, setActiveGame] = useState<GameMetadata | null>(null);
   const [gameMode, setGameMode] = useState<GameMode>('bot');
   const [botDifficulty, setBotDifficulty] = useState<BotDifficulty>('medium');
+  const [activePlayerCount, setActivePlayerCount] = useState<number>(2);
   const [multiplayerData, setMultiplayerData] = useState<MultiplayerMatchData | null>(null);
 
   // Initial socket registration & URL room check
@@ -103,13 +104,14 @@ export const App: React.FC = () => {
   };
 
   // Launch Bot Game
-  const handleStartBotGame = (difficulty: BotDifficulty) => {
+  const handleStartBotGame = (difficulty: BotDifficulty, playerCount?: number) => {
     if (!selectedGameForModal) return;
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     document.documentElement.scrollTop = 0;
     setActiveGame(selectedGameForModal);
     setGameMode('bot');
     setBotDifficulty(difficulty);
+    setActivePlayerCount(playerCount || 2);
     setMultiplayerData(null);
     setSelectedGameForModal(null);
   };
@@ -122,6 +124,7 @@ export const App: React.FC = () => {
     setActiveGame(game);
     setGameMode(matchData.roomId.startsWith('M_') ? 'match' : 'room');
     setMultiplayerData(matchData);
+    setActivePlayerCount(matchData.allPlayers?.length || matchData.playerCount || 2);
     setSelectedGameForModal(null);
     setInviteRoomId(null);
   };
@@ -153,6 +156,7 @@ export const App: React.FC = () => {
         gameId={activeGame.id}
         mode={gameMode}
         botDifficulty={botDifficulty}
+        playerCount={activePlayerCount}
         multiplayerData={multiplayerData}
         onExit={handleExitGame}
       />

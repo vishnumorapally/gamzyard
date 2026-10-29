@@ -15,7 +15,19 @@ class GameManager {
       'othello', 'dots-and-boxes', 'gomoku', 'memory-match', 'mancala',
       'cyber-trivia', 'word-clash', 'rps-strike',
       'hand-cricket', 'rpsls', 'nim', 'matchstick-puzzle',
-      'coin-toss', 'odd-even', 'higher-lower', 'guess-number'
+      'coin-toss', 'odd-even', 'higher-lower', 'guess-number',
+      'pallanguzhi', 'chowka-bara', 'pachisi', 'snakes-and-ladders', 'ludo', 'carrom',
+      'kabaddi', 'cricket-quiz', 'antakshari', 'name-place-animal-thing',
+      'truth-or-dare', 'never-have-i-ever', 'who-knows-me-best', 'most-likely-to',
+      'two-truths-and-a-lie', 'would-you-rather', 'rapid-fire', 'dumb-charades',
+      'guess-the-movie', 'guess-the-song', 'guess-the-word', 'imposter-word',
+      'mafia', 'spyfall',
+      'word-chain', 'wordle', 'hangman', 'word-builder', 'anagrams', 'unscramble',
+      'last-letter', 'alphabet-categories', 'forbidden-word', 'rhyme-battle',
+      'sentence-builder', 'emoji-movie-guess',
+      'sudoku', 'minesweeper', 'simon-says', 'mastermind', 'bulls-and-cows',
+      'nonogram', 'lights-out', 'math-battle', 'logic-grid', 'pattern-recognition',
+      'daily-riddle'
     ];
     games.forEach(g => this.matchmakingQueues.set(g, []));
   }
@@ -70,23 +82,59 @@ class GameManager {
 
     // Handle any rooms where user is active
     for (const [roomId, room] of this.rooms.entries()) {
-      const playerIndex = room.players.findIndex(p => p.socketId === socketId);
-      if (playerIndex !== -1) {
-        const leavingPlayerName = room.players[playerIndex]?.name || 'Opponent';
-        const remainingPlayer = room.players.find(p => p.socketId !== socketId);
-        if (remainingPlayer) {
-          // Automatic win for the remaining player!
-          this.io.to(remainingPlayer.socketId).emit('opponent_left', {
-            message: `${leavingPlayerName} left the game.`,
-            leavingName: leavingPlayerName,
-            winner: remainingPlayer.socketId,
-            reason: 'disconnect'
-          });
-        }
-        this.rooms.delete(roomId);
-      }
+      this.handlePlayerExit(socketId, roomId, 'disconnect');
     }
     this.broadcastOnlineCount();
+  }
+
+  handlePlayerExit(socketId, roomId, reason = 'exit') {
+    const room = this.rooms.get(roomId);
+    if (!room) return;
+
+    const playerIndex = room.players.findIndex(p => p.socketId === socketId);
+    if (playerIndex === -1) return;
+
+    const leavingPlayer = room.players[playerIndex];
+    const leavingPlayerName = leavingPlayer.name || 'Opponent';
+
+    const otherHumanPlayers = room.players.filter(p => !p.isBot && p.socketId !== socketId);
+    const hasBots = room.players.some(p => p.isBot);
+    const isMultiOrHasBots = room.players.length > 2 || hasBots;
+
+    if (otherHumanPlayers.length > 0 && isMultiOrHasBots) {
+      // Don't kill the room! AI Bot takes over their slot so remaining humans can finish
+      leavingPlayer.isBot = true;
+      leavingPlayer.name = `${leavingPlayerName} (Bot)`;
+      leavingPlayer.socketId = `bot_${Math.random().toString(36).slice(2, 6)}`;
+      leavingPlayer.avatar = 'robot';
+
+      if (leavingPlayer.isHost) {
+        leavingPlayer.isHost = false;
+        otherHumanPlayers[0].isHost = true;
+      }
+
+      this.io.to(roomId).emit('player_replaced_by_bot', {
+        roomId,
+        leavingSocketId: socketId,
+        leavingName: leavingPlayerName,
+        replacedRole: leavingPlayer.role,
+        replacedPlayer: leavingPlayer,
+        allPlayers: room.players,
+        message: `${leavingPlayerName} left the game. An AI Bot has taken over their pawns!`
+      });
+      console.log(`[Room ${roomId}] Player ${leavingPlayerName} replaced by AI Bot. Game continues.`);
+    } else {
+      if (otherHumanPlayers.length > 0) {
+        const remainingPlayer = otherHumanPlayers[0];
+        this.io.to(remainingPlayer.socketId).emit('opponent_left', {
+          message: `${leavingPlayerName} left the game.`,
+          leavingName: leavingPlayerName,
+          winner: remainingPlayer.socketId,
+          reason
+        });
+      }
+      this.rooms.delete(roomId);
+    }
   }
 
   broadcastOnlineCount() {
@@ -193,21 +241,35 @@ class GameManager {
   }
 
   // --- PRIVATE ROOMS ---
-  createPrivateRoom(socket, gameId) {
+  createPrivateRoom(socket, gameId, maxPlayers = 2) {
     let user = this.users.get(socket.id);
     if (!user) {
       user = { id: socket.id, name: `Player_${socket.id.slice(0, 4)}`, avatar: 'fox', isGuest: true };
       this.users.set(socket.id, user);
     }
 
+    const multiCapacityGames = [
+      'ludo', 'snakes-and-ladders', 'chowka-bara', 'pachisi', 'carrom', 'antakshari', 'name-place-animal-thing',
+      'truth-or-dare', 'never-have-i-ever', 'who-knows-me-best', 'most-likely-to',
+      'two-truths-and-a-lie', 'would-you-rather', 'rapid-fire', 'dumb-charades',
+      'guess-the-movie', 'guess-the-song', 'guess-the-word', 'imposter-word',
+      'mafia', 'spyfall',
+      'word-chain', 'wordle', 'hangman', 'word-builder', 'anagrams', 'unscramble',
+      'last-letter', 'alphabet-categories', 'forbidden-word', 'rhyme-battle',
+      'sentence-builder', 'emoji-movie-guess',
+      'memory-match', 'math-battle'
+    ];
+    const defaultCapacity = multiCapacityGames.includes(gameId) ? 4 : 2;
+    const capacity = Math.max(2, Math.min(8, maxPlayers || defaultCapacity));
     const roomId = Math.random().toString(36).substring(2, 8).toUpperCase();
 
     const room = {
       id: roomId,
       gameId,
+      maxPlayers: capacity,
       isPublicMatch: false,
       players: [
-        { socketId: socket.id, ...user, symbol: 'X', color: 'white', role: 'player1', isHost: true }
+        { socketId: socket.id, ...user, symbol: 'P1', color: 'red', role: 'player1', isHost: true, isBot: false }
       ],
       gameState: null,
       currentTurn: socket.id,
@@ -227,13 +289,16 @@ class GameManager {
   }
 
   joinPrivateRoom(socket, roomId, requestedGameId) {
-    const user = this.users.get(socket.id);
-    if (!user) return;
+    let user = this.users.get(socket.id);
+    if (!user) {
+      user = { id: socket.id, name: `Player_${socket.id.slice(0, 4)}`, avatar: 'fox', isGuest: true };
+      this.users.set(socket.id, user);
+    }
 
     const normalizedRoomId = (roomId || '').trim().toUpperCase();
     let room = this.rooms.get(normalizedRoomId);
 
-    // If room is not registered yet (e.g. host just shared link or was created with gameId)
+    // If room is not registered yet
     if (!room) {
       socket.emit('join_error', {
         message: `Room "${normalizedRoomId}" was not found or has expired. Make sure host has room open.`
@@ -241,47 +306,94 @@ class GameManager {
       return;
     }
 
-    if (room.players.length >= 2) {
+    const maxCap = room.maxPlayers || 2;
+    if (room.players.length >= maxCap) {
       const existingPlayer = room.players.find(p => p.socketId === socket.id);
       if (!existingPlayer) {
-        socket.emit('join_error', { message: 'This room is already full (2/2 players).' });
+        socket.emit('join_error', { message: `This room is already full (${room.players.length}/${maxCap} players).` });
         return;
       }
     } else {
-      room.players.push({
-        socketId: socket.id,
-        ...user,
-        symbol: 'O',
-        color: 'black',
-        role: 'player2',
-        isHost: false
-      });
-      room.scores[socket.id] = 0;
+      const existingPlayer = room.players.find(p => p.socketId === socket.id);
+      if (!existingPlayer) {
+        const roleIdx = room.players.length + 1;
+        const colors = ['red', 'green', 'yellow', 'blue'];
+        room.players.push({
+          socketId: socket.id,
+          ...user,
+          symbol: `P${roleIdx}`,
+          color: colors[roleIdx - 1] || 'white',
+          role: `player${roleIdx}`,
+          isHost: false,
+          isBot: false
+        });
+        room.scores[socket.id] = 0;
+      }
     }
 
     socket.join(normalizedRoomId);
 
-    const p1 = room.players[0];
-    const p2 = room.players[1];
+    // Broadcast room update to all in room
+    this.io.to(normalizedRoomId).emit('room_update', { room });
 
-    this.io.to(p1.socketId).emit('room_joined', {
-      roomId: normalizedRoomId,
-      gameId: room.gameId,
-      you: p1,
-      opponent: p2,
-      yourRole: 'player1',
-      isYourTurn: true
+    // If room is full, start game automatically or allow host to start
+    if (room.players.length >= maxCap) {
+      this.startRoomGame(socket, normalizedRoomId, true);
+    }
+
+    this.broadcastOnlineCount();
+  }
+
+  addBotToRoom(socket, roomId) {
+    const normalizedRoomId = (roomId || '').trim().toUpperCase();
+    const room = this.rooms.get(normalizedRoomId);
+    if (!room) return;
+
+    const maxCap = room.maxPlayers || 4;
+    if (room.players.length >= maxCap) return;
+
+    const roleIdx = room.players.length + 1;
+    const colors = ['red', 'green', 'yellow', 'blue'];
+    const bot = {
+      socketId: `bot_${Math.random().toString(36).slice(2, 6)}`,
+      id: `bot_${roleIdx}`,
+      name: `AI Bot ${roleIdx}`,
+      avatar: 'robot',
+      symbol: `P${roleIdx}`,
+      color: colors[roleIdx - 1] || 'white',
+      role: `player${roleIdx}`,
+      isHost: false,
+      isBot: true
+    };
+
+    room.players.push(bot);
+    this.io.to(normalizedRoomId).emit('room_update', { room });
+
+    if (room.players.length >= maxCap) {
+      this.startRoomGame(socket, normalizedRoomId, true);
+    }
+  }
+
+  startRoomGame(socket, roomId, isAuto = false) {
+    const normalizedRoomId = (roomId || '').trim().toUpperCase();
+    const room = this.rooms.get(normalizedRoomId);
+    if (!room || room.players.length < 2) return;
+
+    room.players.forEach((p, idx) => {
+      if (!p.isBot) {
+        const opponent = room.players.find(other => other.socketId !== p.socketId) || room.players[1];
+        this.io.to(p.socketId).emit('room_joined', {
+          roomId: normalizedRoomId,
+          gameId: room.gameId,
+          you: p,
+          opponent,
+          allPlayers: room.players,
+          playerCount: room.players.length,
+          yourRole: p.role,
+          isYourTurn: idx === 0
+        });
+      }
     });
-
-    this.io.to(p2.socketId).emit('room_joined', {
-      roomId: normalizedRoomId,
-      gameId: room.gameId,
-      you: p2,
-      opponent: p1,
-      yourRole: 'player2',
-      isYourTurn: false
-    });
-
     this.broadcastOnlineCount();
   }
 
@@ -372,24 +484,8 @@ class GameManager {
   }
 
   leaveRoom(socket, roomId) {
-    const room = this.rooms.get(roomId);
-    if (!room) return;
-
-    const playerIndex = room.players.findIndex(p => p.socketId === socket.id);
-    const leavingPlayerName = (playerIndex !== -1 && room.players[playerIndex]?.name) || 'Opponent';
-    const remainingPlayer = room.players.find(p => p.socketId !== socket.id);
-    if (remainingPlayer) {
-      // Remaining player notified of leave
-      this.io.to(remainingPlayer.socketId).emit('opponent_left', {
-        message: `${leavingPlayerName} left the game.`,
-        leavingName: leavingPlayerName,
-        winner: remainingPlayer.socketId,
-        reason: 'exit'
-      });
-    }
-
+    this.handlePlayerExit(socket.id, roomId, 'exit');
     socket.leave(roomId);
-    this.rooms.delete(roomId);
     this.broadcastOnlineCount();
   }
 }

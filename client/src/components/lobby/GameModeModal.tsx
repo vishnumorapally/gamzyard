@@ -1,5 +1,4 @@
-// client/src/components/lobby/GameModeModal.tsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   X,
   Bot,
@@ -11,7 +10,9 @@ import {
   RotateCw,
   Sparkles,
   ArrowRight,
-  Info
+  Info,
+  UserPlus,
+  Users
 } from 'lucide-react';
 import { BotDifficulty, GameMetadata, GameMode, MultiplayerMatchData } from '../../types';
 import { sound } from '../../services/sound';
@@ -23,9 +24,47 @@ interface GameModeModalProps {
   isOpen: boolean;
   initialTab?: GameMode;
   onClose: () => void;
-  onStartBotGame: (difficulty: BotDifficulty) => void;
+  onStartBotGame: (difficulty: BotDifficulty, playerCount?: number) => void;
   onStartMultiplayerGame: (matchData: MultiplayerMatchData) => void;
 }
+
+const MULTI_CAPACITY_GAMES = [
+  'ludo',
+  'snakes-and-ladders',
+  'chowka-bara',
+  'pachisi',
+  'carrom',
+  'antakshari',
+  'name-place-animal-thing',
+  'truth-or-dare',
+  'never-have-i-ever',
+  'who-knows-me-best',
+  'most-likely-to',
+  'two-truths-and-a-lie',
+  'would-you-rather',
+  'rapid-fire',
+  'dumb-charades',
+  'guess-the-movie',
+  'guess-the-song',
+  'guess-the-word',
+  'imposter-word',
+  'mafia',
+  'spyfall',
+  'word-chain',
+  'wordle',
+  'hangman',
+  'word-builder',
+  'anagrams',
+  'unscramble',
+  'last-letter',
+  'alphabet-categories',
+  'forbidden-word',
+  'rhyme-battle',
+  'sentence-builder',
+  'emoji-movie-guess',
+  'memory-match',
+  'math-battle'
+];
 
 export const GameModeModal: React.FC<GameModeModalProps> = ({
   game,
@@ -37,10 +76,12 @@ export const GameModeModal: React.FC<GameModeModalProps> = ({
 }) => {
   const [selectedTab, setSelectedTab] = useState<GameMode>(initialTab);
   const [botDifficulty, setBotDifficulty] = useState<BotDifficulty>('medium');
+  const [selectedPlayerCount, setSelectedPlayerCount] = useState<number>(4);
 
   // Private room state
   const [roomAction, setRoomAction] = useState<'create' | 'join'>('create');
   const [createdRoomId, setCreatedRoomId] = useState<string | null>(null);
+  const [roomData, setRoomData] = useState<any>(null);
   const [joinInputCode, setJoinInputCode] = useState<string>('');
   const [copiedCode, setCopiedCode] = useState<boolean>(false);
   const [copiedLink, setCopiedLink] = useState<boolean>(false);
@@ -51,17 +92,21 @@ export const GameModeModal: React.FC<GameModeModalProps> = ({
   const [isSearchingMatch, setIsSearchingMatch] = useState<boolean>(false);
   const [searchSeconds, setSearchSeconds] = useState<number>(0);
 
+  const supportsMultiCapacity = game ? MULTI_CAPACITY_GAMES.includes(game.id) : false;
+
   // Reset modal state on open
   useEffect(() => {
     if (isOpen) {
       setSelectedTab(initialTab);
       setCreatedRoomId(null);
+      setRoomData(null);
       setJoinInputCode('');
       setJoinError(null);
       setIsSearchingMatch(false);
       setSearchSeconds(0);
+      setSelectedPlayerCount(game?.id === 'carrom' ? 2 : 4);
     }
-  }, [isOpen, initialTab]);
+  }, [isOpen, initialTab, game]);
 
   // Matchmaking timer
   useEffect(() => {
@@ -80,10 +125,16 @@ export const GameModeModal: React.FC<GameModeModalProps> = ({
 
     const socket = getSocket();
 
-    const handleRoomCreated = (data: { roomId: string; gameId: string }) => {
+    const handleRoomCreated = (data: { roomId: string; gameId: string; room: any }) => {
       setCreatedRoomId(data.roomId);
+      setRoomData(data.room);
       setIsCreatingRoom(false);
       sound.play('match');
+    };
+
+    const handleRoomUpdate = (data: { room: any }) => {
+      setRoomData(data.room);
+      sound.play('tick');
     };
 
     const handleRoomJoined = (data: MultiplayerMatchData) => {
@@ -103,32 +154,56 @@ export const GameModeModal: React.FC<GameModeModalProps> = ({
     };
 
     socket.on('room_created', handleRoomCreated);
+    socket.on('room_update', handleRoomUpdate);
     socket.on('room_joined', handleRoomJoined);
     socket.on('match_found', handleMatchFound);
     socket.on('join_error', handleJoinError);
 
     return () => {
       socket.off('room_created', handleRoomCreated);
+      socket.off('room_update', handleRoomUpdate);
       socket.off('room_joined', handleRoomJoined);
       socket.off('match_found', handleMatchFound);
       socket.off('join_error', handleJoinError);
     };
   }, [isOpen, game, onStartMultiplayerGame]);
 
-  if (!isOpen || !game) return null;
-
   // Private room handlers
-  const handleCreateRoom = () => {
+  const handleCreateRoom = useCallback(() => {
+    if (!game) return;
     setIsCreatingRoom(true);
     setJoinError(null);
+    const socket = getSocket();
+    socket.emit('create_room', {
+      gameId: game.id,
+      maxPlayers: supportsMultiCapacity ? 4 : 2
+    });
+  }, [game, supportsMultiCapacity]);
+
+  // Auto-create private room when opening Friend Room tab
+  useEffect(() => {
+    if (isOpen && game && selectedTab === 'room' && roomAction === 'create' && !createdRoomId && !isCreatingRoom) {
+      handleCreateRoom();
+    }
+  }, [isOpen, game, selectedTab, roomAction, createdRoomId, isCreatingRoom, handleCreateRoom]);
+
+  const handleAddBotToRoom = () => {
+    if (!createdRoomId) return;
     sound.play('click');
     const socket = getSocket();
-    socket.emit('create_room', { gameId: game.id });
+    socket.emit('add_bot_to_room', { roomId: createdRoomId });
+  };
+
+  const handleStartRoomGame = () => {
+    if (!createdRoomId) return;
+    sound.play('click');
+    const socket = getSocket();
+    socket.emit('start_room_game', { roomId: createdRoomId });
   };
 
   const handleJoinRoom = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!joinInputCode.trim()) return;
+    if (!joinInputCode.trim() || !game) return;
     setJoinError(null);
     sound.play('click');
     const socket = getSocket();
@@ -145,7 +220,7 @@ export const GameModeModal: React.FC<GameModeModalProps> = ({
   };
 
   const handleCopyLink = () => {
-    if (createdRoomId) {
+    if (createdRoomId && game) {
       const inviteUrl = `${window.location.origin}/?room=${createdRoomId}&game=${game.id}`;
       navigator.clipboard.writeText(inviteUrl);
       setCopiedLink(true);
@@ -156,6 +231,7 @@ export const GameModeModal: React.FC<GameModeModalProps> = ({
 
   // Matchmaking handlers
   const handleStartMatchmaking = () => {
+    if (!game) return;
     setIsSearchingMatch(true);
     setSearchSeconds(0);
     sound.play('match');
@@ -165,11 +241,14 @@ export const GameModeModal: React.FC<GameModeModalProps> = ({
   };
 
   const handleCancelMatchmaking = () => {
+    if (!game) return;
     setIsSearchingMatch(false);
     sound.play('click');
     const socket = getSocket();
     socket.emit('cancel_matchmaking', { gameId: game.id });
   };
+
+  if (!isOpen || !game) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md animate-fade-in">
@@ -244,6 +323,35 @@ export const GameModeModal: React.FC<GameModeModalProps> = ({
         {/* --- TAB 1: PLAY VS BOT --- */}
         {selectedTab === 'bot' && (
           <div className="space-y-4 animate-fade-in">
+            {/* Player Count option for multi-player traditional games */}
+            {supportsMultiCapacity && (
+              <div className="bg-gray-950/70 p-4 rounded-2xl border border-gray-800">
+                <label className="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-2 flex items-center space-x-1.5">
+                  <Users className="w-3.5 h-3.5 text-cyan-400" />
+                  <span>Number of Players</span>
+                </label>
+                <div className="grid grid-cols-3 gap-2">
+                  {[2, 3, 4].map(count => (
+                    <button
+                      key={count}
+                      type="button"
+                      onClick={() => { setSelectedPlayerCount(count); sound.play('click'); }}
+                      className={`p-3 rounded-xl border flex flex-col items-center justify-center transition-all ${
+                        selectedPlayerCount === count
+                          ? 'bg-cyan-950/40 border-cyan-400 ring-2 ring-cyan-400/50 shadow-neon-cyan'
+                          : 'bg-gray-900/60 border-gray-800 hover:border-gray-700'
+                      }`}
+                    >
+                      <span className="text-sm font-black text-cyan-400">{count} Players</span>
+                      <span className="text-[10px] text-gray-400 mt-0.5">
+                        {count === 2 ? '1v1 Match' : count === 3 ? '3-Way Battle' : 'Full 4-Player'}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
             <div className="bg-gray-950/70 p-4 rounded-2xl border border-gray-800">
               <label className="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-2 flex items-center space-x-1.5">
                 <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
@@ -280,7 +388,7 @@ export const GameModeModal: React.FC<GameModeModalProps> = ({
             <button
               onClick={() => {
                 sound.play('match');
-                onStartBotGame(botDifficulty);
+                onStartBotGame(botDifficulty, supportsMultiCapacity ? selectedPlayerCount : 2);
               }}
               className="w-full py-3.5 bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:opacity-95 text-white font-extrabold rounded-2xl shadow-neon-cyan active:scale-95 transition-all text-sm uppercase tracking-wider flex items-center justify-center space-x-2"
             >
@@ -290,7 +398,7 @@ export const GameModeModal: React.FC<GameModeModalProps> = ({
           </div>
         )}
 
-        {/* --- TAB 2: FRIEND ROOM --- */}
+        {/* --- TAB 2: FRIEND ROOM & LIVE LOBBY --- */}
         {selectedTab === 'room' && (
           <div className="space-y-4 animate-fade-in">
             {/* Create vs Join Sub-tabs */}
@@ -318,49 +426,137 @@ export const GameModeModal: React.FC<GameModeModalProps> = ({
             {roomAction === 'create' ? (
               <div className="bg-gray-950/80 p-5 rounded-2xl border border-gray-800 text-center space-y-4">
                 {!createdRoomId ? (
-                  <div>
-                    <p className="text-xs text-gray-300 mb-4">
-                      Create an invite-only private room. Share the 6-character room code or direct link with your friend to play together!
-                    </p>
+                  <div className="py-10 flex flex-col items-center justify-center space-y-3">
+                    <RotateCw className="w-8 h-8 text-purple-400 animate-spin" />
+                    <span className="text-sm font-bold text-gray-300">Creating Room Lobby...</span>
                     <button
                       onClick={handleCreateRoom}
-                      disabled={isCreatingRoom}
-                      className="py-3 px-6 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-extrabold rounded-xl shadow-neon-purple active:scale-95 transition-all text-sm uppercase tracking-wider inline-flex items-center space-x-2"
+                      className="mt-2 text-xs text-purple-400 underline hover:text-purple-300"
                     >
-                      {isCreatingRoom ? <RotateCw className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
-                      <span>Generate Room Code</span>
+                      Click if taking too long
                     </button>
                   </div>
                 ) : (
-                  <div className="space-y-4">
-                    <div className="text-xs uppercase font-bold text-gray-400 tracking-wider">
-                      Your Private Room Code
-                    </div>
-                    <div className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 tracking-widest font-mono">
-                      {createdRoomId}
+                  /* Interactive Live Lobby Arena */
+                  <div className="space-y-4 text-left">
+                    <div className="flex items-center justify-between pb-3 border-b border-gray-800">
+                      <div>
+                        <div className="text-[10px] uppercase font-bold text-gray-400 tracking-wider">
+                          Room Code
+                        </div>
+                        <div className="text-2xl font-black text-purple-400 font-mono tracking-widest">
+                          {createdRoomId}
+                        </div>
+                      </div>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={handleCopyCode}
+                          className="py-1.5 px-3 bg-gray-800 hover:bg-gray-700 rounded-xl text-xs font-bold text-gray-200 border border-gray-700 flex items-center space-x-1"
+                        >
+                          {copiedCode ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                          <span>{copiedCode ? 'Copied' : 'Copy'}</span>
+                        </button>
+                        <button
+                          onClick={handleCopyLink}
+                          className="py-1.5 px-3 bg-purple-600/30 hover:bg-purple-600/50 rounded-xl text-xs font-bold text-purple-200 border border-purple-500/40 flex items-center space-x-1"
+                        >
+                          {copiedLink ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                          <span>Invite Link</span>
+                        </button>
+                      </div>
                     </div>
 
-                    <div className="flex items-center justify-center space-x-2 pt-1">
+                    {/* Player Slots In Lobby */}
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-xs font-bold text-gray-300">
+                        <span>Lobby Seats ({roomData?.players?.length || 1}/{roomData?.maxPlayers || (supportsMultiCapacity ? 4 : 2)})</span>
+                        <span className={(roomData?.players?.length || 1) >= 2 ? 'text-emerald-400' : 'text-amber-400'}>
+                          {(roomData?.players?.length || 1) >= 2 ? '✓ Ready to Start' : 'Waiting for Players...'}
+                        </span>
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        {Array.from({ length: roomData?.maxPlayers || (supportsMultiCapacity ? 4 : 2) }).map((_, idx) => {
+                          const player = roomData?.players?.[idx];
+                          return (
+                            <div
+                              key={idx}
+                              className={`p-3 rounded-xl border flex items-center justify-between transition-all ${
+                                player
+                                  ? player.isBot
+                                    ? 'bg-purple-950/20 border-purple-500/40'
+                                    : 'bg-gray-900 border-purple-500/50 shadow-neon-purple'
+                                  : 'bg-gray-950/60 border-dashed border-gray-800'
+                              }`}
+                            >
+                              <div className="flex items-center gap-2.5">
+                                <div className="w-9 h-9 rounded-xl bg-gray-800 flex items-center justify-center text-sm font-bold text-white shadow">
+                                  {player?.isBot ? '🤖' : player?.isHost ? '👑' : player ? '👤' : idx + 1}
+                                </div>
+                                <div>
+                                  <div className="text-xs font-bold text-white flex items-center gap-1.5">
+                                    <span>{player ? player.name : `Slot ${idx + 1}`}</span>
+                                  </div>
+                                  <div className="text-[10px] text-gray-400">
+                                    {player?.isHost
+                                      ? '👑 Host'
+                                      : player?.isBot
+                                      ? '🤖 AI Bot'
+                                      : player
+                                      ? '👤 Player'
+                                      : 'Open Seat'}
+                                  </div>
+                                </div>
+                              </div>
+
+                              {!player && (
+                                <button
+                                  type="button"
+                                  onClick={handleAddBotToRoom}
+                                  className="text-[10px] font-bold px-2.5 py-1 bg-purple-600/20 hover:bg-purple-600/40 text-purple-300 rounded-lg border border-purple-500/30 transition-colors"
+                                >
+                                  + Add Bot
+                                </button>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Helper Guidance */}
+                    <p className="text-[11px] text-gray-400 text-center">
+                      {(roomData?.players?.length || 1) < 2
+                        ? 'Share the room code with a friend, or tap "+ Add AI Bot" to play!'
+                        : 'At least 2 players are in the lobby! You can start now, or add more bots/friends.'}
+                    </p>
+
+                    {/* Host Action Buttons */}
+                    <div className="flex flex-col sm:flex-row gap-2 pt-1">
+                      {(roomData?.players?.length || 1) < (roomData?.maxPlayers || (supportsMultiCapacity ? 4 : 2)) && (
+                        <button
+                          type="button"
+                          onClick={handleAddBotToRoom}
+                          className="flex-1 py-3 bg-gray-800 hover:bg-gray-700 text-purple-300 font-bold rounded-xl border border-purple-500/30 text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all"
+                        >
+                          <UserPlus className="w-4 h-4 text-purple-400" />
+                          <span>+ Add AI Bot</span>
+                        </button>
+                      )}
+
                       <button
-                        onClick={handleCopyCode}
-                        className="py-2 px-3 bg-gray-800 hover:bg-gray-700 rounded-xl text-xs font-bold text-gray-200 border border-gray-700 flex items-center space-x-1.5 transition-all"
+                        type="button"
+                        onClick={handleStartRoomGame}
+                        disabled={(roomData?.players?.length || 1) < 2}
+                        className="flex-1 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 disabled:opacity-40 text-white font-black rounded-xl shadow-neon-purple text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all"
                       >
-                        {copiedCode ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-                        <span>{copiedCode ? 'Code Copied!' : 'Copy Code'}</span>
+                        <Play className="w-4 h-4 fill-white" />
+                        <span>
+                          {(roomData?.players?.length || 1) < 2
+                            ? 'Waiting for Players'
+                            : `Start Game (${roomData?.players?.length} Players)`}
+                        </span>
                       </button>
-
-                      <button
-                        onClick={handleCopyLink}
-                        className="py-2 px-3 bg-purple-600/30 hover:bg-purple-600/50 rounded-xl text-xs font-bold text-purple-200 border border-purple-500/40 flex items-center space-x-1.5 transition-all"
-                      >
-                        {copiedLink ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-                        <span>{copiedLink ? 'Link Copied!' : 'Copy Invite Link'}</span>
-                      </button>
-                    </div>
-
-                    <div className="flex items-center justify-center space-x-2 text-xs text-amber-400/90 bg-amber-950/30 py-2 rounded-xl border border-amber-900/40">
-                      <RotateCw className="w-3.5 h-3.5 animate-spin" />
-                      <span>Waiting for your friend to enter the room...</span>
                     </div>
                   </div>
                 )}
@@ -446,16 +642,14 @@ export const GameModeModal: React.FC<GameModeModalProps> = ({
                     >
                       Cancel Search
                     </button>
-                    {/* Simulated Instant Match for Solo Testing */}
                     <button
                       onClick={() => {
                         handleCancelMatchmaking();
                         onStartBotGame('hard');
                       }}
                       className="py-2 px-4 bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-300 font-semibold rounded-xl border border-emerald-500/40 text-xs transition-all"
-                      title="Instantly matches with an AI Challenger so you can test right away"
                     >
-                      ⚡ Practice vs Challenger Bot
+                      ⚡ Play vs AI Bot Now
                     </button>
                   </div>
                 </div>

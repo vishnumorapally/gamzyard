@@ -24,6 +24,54 @@ import { CoinTossGame } from '../../games/cointoss/CoinTossGame';
 import { OddEvenGame } from '../../games/oddeven/OddEvenGame';
 import { HigherLowerGame } from '../../games/higherlower/HigherLowerGame';
 import { GuessNumberGame } from '../../games/guessthenumber/GuessNumberGame';
+import { PallanguzhiGame } from '../../games/pallanguzhi/PallanguzhiGame';
+import { ChowkaBaraGame } from '../../games/chowkabara/ChowkaBaraGame';
+import { PachisiGame } from '../../games/pachisi/PachisiGame';
+import { SnakesLaddersGame } from '../../games/snakesladders/SnakesLaddersGame';
+import { LudoGame } from '../../games/ludo/LudoGame';
+import { CarromGame } from '../../games/carrom/CarromGame';
+import { KabaddiGame } from '../../games/kabaddi/KabaddiGame';
+import { CricketQuizGame } from '../../games/cricketquiz/CricketQuizGame';
+import { AntakshariGame } from '../../games/antakshari/AntakshariGame';
+import { NPATGame } from '../../games/nameplaceanimalthing/NPATGame';
+import { TruthOrDareGame } from '../../games/truthordare/TruthOrDareGame';
+import { NeverHaveIEverGame } from '../../games/neverhaveiever/NeverHaveIEverGame';
+import { WhoKnowsMeBestGame } from '../../games/whoknowsmebest/WhoKnowsMeBestGame';
+import { MostLikelyToGame } from '../../games/mostlikelyto/MostLikelyToGame';
+import { TwoTruthsLieGame } from '../../games/twotruthsalie/TwoTruthsLieGame';
+import { WouldYouRatherGame } from '../../games/wouldyourather/WouldYouRatherGame';
+import { RapidFireGame } from '../../games/rapidfire/RapidFireGame';
+import { DumbCharadesGame } from '../../games/dumbcharades/DumbCharadesGame';
+import { GuessTheMovieGame } from '../../games/guessthemovie/GuessTheMovieGame';
+import { GuessTheSongGame } from '../../games/guessthesong/GuessTheSongGame';
+import { GuessTheWordGame } from '../../games/guesstheword/GuessTheWordGame';
+import { ImposterWordGame } from '../../games/imposterword/ImposterWordGame';
+import { MafiaGame } from '../../games/mafia/MafiaGame';
+import { SpyfallGame } from '../../games/spyfall/SpyfallGame';
+import { WordChainGame } from '../../games/wordchain/WordChainGame';
+import { WordleGame } from '../../games/wordle/WordleGame';
+import { HangmanGame } from '../../games/hangman/HangmanGame';
+import { WordBuilderGame } from '../../games/wordbuilder/WordBuilderGame';
+import { AnagramsGame } from '../../games/anagrams/AnagramsGame';
+import { UnscrambleGame } from '../../games/unscramble/UnscrambleGame';
+import { LastLetterGame } from '../../games/lastletter/LastLetterGame';
+import { AlphabetCategoriesGame } from '../../games/alphabetcategories/AlphabetCategoriesGame';
+import { ForbiddenWordGame } from '../../games/forbiddenword/ForbiddenWordGame';
+import { RhymeBattleGame } from '../../games/rhymebattle/RhymeBattleGame';
+import { SentenceBuilderGame } from '../../games/sentencebuilder/SentenceBuilderGame';
+import { EmojiMovieGuessGame } from '../../games/emojimovieguess/EmojiMovieGuessGame';
+import { SudokuGame } from '../../games/sudoku/SudokuGame';
+import { MinesweeperGame } from '../../games/minesweeper/MinesweeperGame';
+import { MemoryMatchGame } from '../../games/memorymatch/MemoryMatchGame';
+import { SimonSaysGame } from '../../games/simonsays/SimonSaysGame';
+import { MastermindGame } from '../../games/mastermind/MastermindGame';
+import { BullsAndCowsGame } from '../../games/bullsandcows/BullsAndCowsGame';
+import { NonogramGame } from '../../games/nonogram/NonogramGame';
+import { LightsOutGame } from '../../games/lightsout/LightsOutGame';
+import { MathBattleGame } from '../../games/mathbattle/MathBattleGame';
+import { LogicGridGame } from '../../games/logicgrid/LogicGridGame';
+import { PatternRecognitionGame } from '../../games/patternrecognition/PatternRecognitionGame';
+import { DailyRiddleGame } from '../../games/dailyriddle/DailyRiddleGame';
 import { ChatBox } from './ChatBox';
 import { sound } from '../../services/sound';
 import { DEFAULT_AVATARS } from '../../services/storage';
@@ -32,6 +80,7 @@ interface GameShellProps {
   gameId: GameId;
   mode: GameMode;
   botDifficulty?: BotDifficulty;
+  playerCount?: number;
   multiplayerData?: MultiplayerMatchData | null;
   onExit: () => void;
 }
@@ -40,6 +89,7 @@ export const GameShell: React.FC<GameShellProps> = ({
   gameId,
   mode,
   botDifficulty = 'medium',
+  playerCount = 2,
   multiplayerData,
   onExit
 }) => {
@@ -289,6 +339,435 @@ export const GameShell: React.FC<GameShellProps> = ({
           <GuessNumberGame
             mode={mode}
             botDifficulty={botDifficulty}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'pallanguzhi' && (
+          <PallanguzhiGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'chowka-bara' && (
+          <ChowkaBaraGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'pachisi' && (
+          <PachisiGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'snakes-and-ladders' && (
+          <SnakesLaddersGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'ludo' && (
+          <LudoGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'carrom' && (
+          <CarromGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'kabaddi' && (
+          <KabaddiGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'cricket-quiz' && (
+          <CricketQuizGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'antakshari' && (
+          <AntakshariGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'name-place-animal-thing' && (
+          <NPATGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'truth-or-dare' && (
+          <TruthOrDareGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'never-have-i-ever' && (
+          <NeverHaveIEverGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'who-knows-me-best' && (
+          <WhoKnowsMeBestGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'most-likely-to' && (
+          <MostLikelyToGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'two-truths-and-a-lie' && (
+          <TwoTruthsLieGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'would-you-rather' && (
+          <WouldYouRatherGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'rapid-fire' && (
+          <RapidFireGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'dumb-charades' && (
+          <DumbCharadesGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'guess-the-movie' && (
+          <GuessTheMovieGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'guess-the-song' && (
+          <GuessTheSongGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'guess-the-word' && (
+          <GuessTheWordGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'imposter-word' && (
+          <ImposterWordGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'mafia' && (
+          <MafiaGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'spyfall' && (
+          <SpyfallGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'word-chain' && (
+          <WordChainGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'wordle' && (
+          <WordleGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'hangman' && (
+          <HangmanGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'word-builder' && (
+          <WordBuilderGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'anagrams' && (
+          <AnagramsGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'unscramble' && (
+          <UnscrambleGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'last-letter' && (
+          <LastLetterGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'alphabet-categories' && (
+          <AlphabetCategoriesGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'forbidden-word' && (
+          <ForbiddenWordGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'rhyme-battle' && (
+          <RhymeBattleGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'sentence-builder' && (
+          <SentenceBuilderGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'emoji-movie-guess' && (
+          <EmojiMovieGuessGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'sudoku' && (
+          <SudokuGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'minesweeper' && (
+          <MinesweeperGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'memory-match' && (
+          <MemoryMatchGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'simon-says' && (
+          <SimonSaysGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'mastermind' && (
+          <MastermindGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'bulls-and-cows' && (
+          <BullsAndCowsGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'nonogram' && (
+          <NonogramGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'lights-out' && (
+          <LightsOutGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'math-battle' && (
+          <MathBattleGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'logic-grid' && (
+          <LogicGridGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'pattern-recognition' && (
+          <PatternRecognitionGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
+            multiplayerData={multiplayerData}
+            onExit={onExit}
+          />
+        )}
+        {gameId === 'daily-riddle' && (
+          <DailyRiddleGame
+            mode={mode}
+            botDifficulty={botDifficulty}
+            playerCount={playerCount}
             multiplayerData={multiplayerData}
             onExit={onExit}
           />

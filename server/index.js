@@ -74,17 +74,31 @@ io.on('connection', (socket) => {
   });
 
   // Private Rooms
-  socket.on('create_room', ({ gameId }) => {
-    gameManager.createPrivateRoom(socket, gameId);
+  socket.on('create_room', ({ gameId, maxPlayers }) => {
+    gameManager.createPrivateRoom(socket, gameId, maxPlayers);
   });
 
   socket.on('join_room', ({ roomId, gameId }) => {
     gameManager.joinPrivateRoom(socket, roomId, gameId);
   });
 
+  socket.on('add_bot_to_room', ({ roomId }) => {
+    gameManager.addBotToRoom(socket, roomId);
+  });
+
+  socket.on('start_room_game', ({ roomId }) => {
+    gameManager.startRoomGame(socket, roomId);
+  });
+
   // Gameplay
   socket.on('make_move', (payload) => {
     gameManager.handleMove(socket, payload);
+  });
+
+  socket.on('game_action', (payload) => {
+    if (payload?.roomId) {
+      socket.to(payload.roomId).emit('game_action', payload);
+    }
   });
 
   // 30s Move Timeout
