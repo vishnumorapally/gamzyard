@@ -30,7 +30,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
           textTransform: 'uppercase',
           marginBottom: '16px'
         }}>
-          WELCOME TO YOUR PLAYGROUND
+          ⚡ ZERO DOWNLOADS · 100% PURE CLUTCH
         </p>
 
         <h1
@@ -45,7 +45,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
             margin: '20px 0'
           }}
         >
-          Your Next Favorite Game Is Here
+          Lock In. Your Next Favorite Game Just Dropped.
         </h1>
 
         <p
@@ -54,11 +54,11 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
             color: '#b8c0d8',
             fontSize: 'clamp(16px, 1.5vw, 19px)',
             lineHeight: 1.7,
-            maxWidth: '540px',
+            maxWidth: '560px',
             marginBottom: '32px'
           }}
         >
-          Discover quick challenges, brain teasers, arcade classics, and multiplayer fun—all in one place with 30-second blitz turn timers.
+          Zero 90GB updates, zero shader-compilation stutter, and definitely no sweaty 4-hour tutorials. Jump straight into 60+ instant-launch blitz duels, galaxy-brain puzzles, and chaotic squad lobbies. Flex on rookie bots or ruthlessly cook your friends before the 30-second turn timer clocks you!
         </p>
 
         <div className="cta-row" style={{ display: 'flex', flexWrap: 'wrap', gap: '13px' }}>

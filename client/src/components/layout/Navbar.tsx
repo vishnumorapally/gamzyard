@@ -203,12 +203,6 @@ export const Navbar: React.FC<NavbarProps> = ({
             </span>
           </button>
 
-          {/* Online count */}
-          <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-white/5 border border-white/10 text-[11px] text-[#a8b0cd] font-bold">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-            <span>{onlineCount} Online</span>
-          </div>
-
           {/* Canva Sign In Button */}
           <button
             onClick={() => { onOpenProfile(); sound.play('click'); }}

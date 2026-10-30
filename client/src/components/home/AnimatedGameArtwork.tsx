@@ -1890,8 +1890,365 @@ export const AnimatedGameArtwork: React.FC<AnimatedGameArtworkProps> = ({ gameEn
         </div>
       )}
 
+      {/* 43. ANAGRAMS */}
+      {gameEngineId === 'anagrams' && (
+        <div className="w-full h-full relative flex items-center justify-center overflow-hidden">
+          <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#818cf8_1px,transparent_1px)] [background-size:16px_16px]" />
+          <svg className="w-full h-full max-h-[160px]" viewBox="0 0 280 160" fill="none">
+            <defs>
+              <filter id="anaGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="4" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+            <g transform="translate(35, 45)">
+              {['L', 'I', 'S', 'T', 'E', 'N'].map((char, i) => (
+                <g key={i} transform={`translate(${i * 35}, 0)`}>
+                  <rect width="30" height="34" rx="6" fill="#1e1b4b" stroke="#818cf8" strokeWidth="1.5" />
+                  <text x="15" y="23" fill="#e0e7ff" fontSize="16" fontWeight="bold" textAnchor="middle">{char}</text>
+                </g>
+              ))}
+            </g>
+            <path d="M 50 40 C 85 15, 125 15, 155 40" stroke="#f59e0b" strokeWidth="2" strokeDasharray="3 3" fill="none" className="animate-pulse" />
+            <path d="M 120 85 C 155 110, 195 110, 230 85" stroke="#38bdf8" strokeWidth="2" strokeDasharray="3 3" fill="none" className="animate-pulse" />
+            <rect x="75" y="96" width="130" height="26" rx="6" fill="#064e3b" stroke="#34d399" strokeWidth="1.2" />
+            <text x="140" y="113" fill="#6ee7b7" fontSize="11" fontWeight="bold" textAnchor="middle">✨ SILENT (MATCH!)</text>
+          </svg>
+        </div>
+      )}
+
+      {/* 44. UNSCRAMBLE */}
+      {gameEngineId === 'unscramble' && (
+        <div className="w-full h-full relative flex items-center justify-center overflow-hidden">
+          <svg className="w-full h-full max-h-[160px]" viewBox="0 0 280 160" fill="none">
+            <rect x="25" y="30" width="230" height="42" rx="8" fill="#1f2937" stroke="#fbbf24" strokeWidth="1.5" />
+            <text x="140" y="56" fill="#fbbf24" fontSize="18" fontWeight="900" letterSpacing="6" textAnchor="middle">
+              B·H·U·A·A·B·L·I
+            </text>
+            <g transform="translate(140, 84)" className="animate-bounce" style={{ animationDuration: '2s' }}>
+              <polygon points="-8,-6 8,-6 0,6" fill="#38bdf8" />
+            </g>
+            <rect x="40" y="98" width="200" height="34" rx="8" fill="#065f46" stroke="#10b981" strokeWidth="2" />
+            <text x="140" y="120" fill="#ffffff" fontSize="14" fontWeight="800" letterSpacing="2" textAnchor="middle">
+              👑 BAAHUBALI ✓
+            </text>
+          </svg>
+        </div>
+      )}
+
+      {/* 45. LAST LETTER CHALLENGE */}
+      {gameEngineId === 'last-letter' && (
+        <div className="w-full h-full relative flex items-center justify-center overflow-hidden">
+          <svg className="w-full h-full max-h-[160px]" viewBox="0 0 280 160" fill="none">
+            <rect x="20" y="45" width="85" height="36" rx="8" fill="#1e293b" stroke="#38bdf8" strokeWidth="1.5" />
+            <text x="56" y="68" fill="#ffffff" fontSize="13" fontWeight="bold">PUSH</text>
+            <text x="91" y="68" fill="#f43f5e" fontSize="15" fontWeight="900">P</text>
+            <path d="M 108 63 L 132 63" stroke="#f59e0b" strokeWidth="3" strokeDasharray="3 2" className="animate-pulse" />
+            <rect x="135" y="45" width="85" height="36" rx="8" fill="#1e293b" stroke="#f43f5e" strokeWidth="1.5" />
+            <text x="145" y="68" fill="#f43f5e" fontSize="15" fontWeight="900">P</text>
+            <text x="156" y="68" fill="#ffffff" fontSize="13" fontWeight="bold">K</text>
+            <g transform="translate(245, 63)">
+              <circle cx="0" cy="0" r="18" fill="#0f172a" stroke="#f43f5e" strokeWidth="2.5" />
+              <text x="0" y="5" fill="#f43f5e" fontSize="12" fontWeight="900" textAnchor="middle">10s</text>
+            </g>
+            <text x="140" y="115" fill="#94a3b8" fontSize="11" fontWeight="bold" textAnchor="middle">⚡ CHAIN: MATCH LAST LETTER</text>
+          </svg>
+        </div>
+      )}
+
+      {/* 46. ALPHABET CATEGORIES */}
+      {gameEngineId === 'alphabet-categories' && (
+        <div className="w-full h-full relative flex items-center justify-center overflow-hidden">
+          <svg className="w-full h-full max-h-[160px]" viewBox="0 0 280 160" fill="none">
+            <g transform="translate(60, 70)">
+              <polygon points="0,-35 30,-18 30,18 0,35 -30,18 -30,-18" fill="#4f46e5" stroke="#818cf8" strokeWidth="2" />
+              <text x="0" y="11" fill="#ffffff" fontSize="30" fontWeight="900" textAnchor="middle">B</text>
+            </g>
+            <g transform="translate(105, 35)">
+              <rect x="0" y="0" width="145" height="22" rx="4" fill="#1e293b" stroke="#475569" strokeWidth="1" />
+              <text x="8" y="15" fill="#38bdf8" fontSize="10" fontWeight="bold">👤 Name: <tspan fill="#ffffff">Bruce</tspan></text>
+              <rect x="0" y="28" width="145" height="22" rx="4" fill="#1e293b" stroke="#475569" strokeWidth="1" />
+              <text x="8" y="43" fill="#34d399" fontSize="10" fontWeight="bold">🌍 Place: <tspan fill="#ffffff">Berlin</tspan></text>
+              <rect x="0" y="56" width="145" height="22" rx="4" fill="#1e293b" stroke="#475569" strokeWidth="1" />
+              <text x="8" y="71" fill="#fbbf24" fontSize="10" fontWeight="bold">🐻 Animal: <tspan fill="#ffffff">Bear</tspan></text>
+            </g>
+            <g transform="translate(178, 125)">
+              <rect x="-35" y="-12" width="70" height="24" rx="12" fill="#dc2626" stroke="#fca5a5" strokeWidth="1.5" className="animate-pulse" />
+              <text x="0" y="4" fill="#ffffff" fontSize="10" fontWeight="900" textAnchor="middle">SLAM STOP! 🚨</text>
+            </g>
+          </svg>
+        </div>
+      )}
+
+      {/* 47. FORBIDDEN WORD (TABOO) */}
+      {gameEngineId === 'forbidden-word' && (
+        <div className="w-full h-full relative flex items-center justify-center overflow-hidden">
+          <svg className="w-full h-full max-h-[160px]" viewBox="0 0 280 160" fill="none">
+            <rect x="70" y="15" width="140" height="130" rx="12" fill="#18181b" stroke="#ef4444" strokeWidth="2" />
+            <rect x="80" y="25" width="120" height="30" rx="6" fill="#3b82f6" />
+            <text x="140" y="45" fill="#ffffff" fontSize="13" fontWeight="900" textAnchor="middle">CINEMA</text>
+            <rect x="80" y="62" width="120" height="18" rx="4" fill="#7f1d1d" stroke="#ef4444" strokeWidth="1" />
+            <text x="140" y="74" fill="#fca5a5" fontSize="9" fontWeight="900" textAnchor="middle">🚫 FORBIDDEN WORDS</text>
+            <text x="140" y="93" fill="#9ca3af" fontSize="10" fontWeight="bold" textAnchor="middle">Movie · Actor · Film</text>
+            <text x="140" y="108" fill="#9ca3af" fontSize="10" fontWeight="bold" textAnchor="middle">Hero · Screen</text>
+            <text x="140" y="132" fill="#ef4444" fontSize="10" fontWeight="900" textAnchor="middle" className="animate-pulse">DON'T SAY THEM!</text>
+          </svg>
+        </div>
+      )}
+
+      {/* 48. RHYME BATTLE */}
+      {gameEngineId === 'rhyme-battle' && (
+        <div className="w-full h-full relative flex items-center justify-center overflow-hidden">
+          <svg className="w-full h-full max-h-[160px]" viewBox="0 0 280 160" fill="none">
+            <g transform="translate(65, 80)">
+              <rect x="-12" y="-30" width="24" height="34" rx="12" fill="#475569" stroke="#94a3b8" strokeWidth="2" />
+              <line x1="-12" y1="-18" x2="12" y2="-18" stroke="#cbd5e1" strokeWidth="1.5" />
+              <line x1="-12" y1="-8" x2="12" y2="-8" stroke="#cbd5e1" strokeWidth="1.5" />
+              <path d="M -18 -10 C -18 15, 18 15, 18 -10" stroke="#f43f5e" strokeWidth="2" fill="none" />
+              <line x1="0" y1="15" x2="0" y2="30" stroke="#f43f5e" strokeWidth="2" />
+              <line x1="-10" y1="30" x2="10" y2="30" stroke="#f43f5e" strokeWidth="2" />
+            </g>
+            <g transform="translate(110, 85)">
+              {[
+                { h: 35, c: '#f43f5e', d: '0.1s' },
+                { h: 50, c: '#ec4899', d: '0.3s' },
+                { h: 25, c: '#8b5cf6', d: '0.2s' },
+                { h: 45, c: '#3b82f6', d: '0.4s' },
+                { h: 60, c: '#10b981', d: '0.15s' },
+                { h: 30, c: '#f59e0b', d: '0.35s' }
+              ].map((bar, i) => (
+                <rect
+                  key={i}
+                  x={i * 12}
+                  y={-bar.h / 2}
+                  width="7"
+                  height={bar.h}
+                  rx="3"
+                  fill={bar.c}
+                  className="animate-pulse"
+                  style={{ animationDelay: bar.d }}
+                />
+              ))}
+            </g>
+            <g transform="translate(210, 50)">
+              <rect x="0" y="0" width="58" height="24" rx="6" fill="#831843" stroke="#f472b6" strokeWidth="1.5" />
+              <text x="29" y="16" fill="#ffffff" fontSize="10" fontWeight="900" textAnchor="middle">FIRE 🔥</text>
+            </g>
+            <g transform="translate(210, 85)">
+              <rect x="0" y="0" width="58" height="24" rx="6" fill="#1e1b4b" stroke="#818cf8" strokeWidth="1.5" />
+              <text x="29" y="16" fill="#ffffff" fontSize="10" fontWeight="900" textAnchor="middle">DESIRE ⚡</text>
+            </g>
+          </svg>
+        </div>
+      )}
+
+      {/* 49. SENTENCE BUILDER */}
+      {gameEngineId === 'sentence-builder' && (
+        <div className="w-full h-full relative flex items-center justify-center overflow-hidden">
+          <svg className="w-full h-full max-h-[160px]" viewBox="0 0 280 160" fill="none">
+            <path d="M 40 40 Q 90 32, 140 40 Q 190 32, 240 40 L 240 120 Q 190 112, 140 120 Q 90 112, 40 120 Z" fill="#1e1b4b" stroke="#a855f7" strokeWidth="2" />
+            <line x1="140" y1="40" x2="140" y2="120" stroke="#a855f7" strokeWidth="2" strokeDasharray="3 3" />
+            <g transform="translate(60, 65)">
+              <rect x="0" y="0" width="65" height="22" rx="4" fill="#0f172a" stroke="#38bdf8" strokeWidth="1" />
+              <text x="32" y="15" fill="#38bdf8" fontSize="11" fontWeight="bold" textAnchor="middle">Once upon</text>
+            </g>
+            <path d="M 125 76 L 155 76" stroke="#fbbf24" strokeWidth="2" strokeDasharray="2 2" className="animate-pulse" />
+            <g transform="translate(155, 65)">
+              <rect x="0" y="0" width="65" height="22" rx="4" fill="#0f172a" stroke="#ec4899" strokeWidth="1" />
+              <text x="32" y="15" fill="#f472b6" fontSize="11" fontWeight="bold" textAnchor="middle">a time in</text>
+            </g>
+            <rect x="80" y="96" width="120" height="20" rx="10" fill="#312e81" stroke="#c084fc" strokeWidth="1" />
+            <text x="140" y="110" fill="#f3e8ff" fontSize="9" fontWeight="bold" textAnchor="middle">✍️ ADD YOUR WORD...</text>
+          </svg>
+        </div>
+      )}
+
+      {/* 50. EMOJI MOVIE GUESS */}
+      {gameEngineId === 'emoji-movie-guess' && (
+        <div className="w-full h-full relative flex items-center justify-center overflow-hidden">
+          <svg className="w-full h-full max-h-[160px]" viewBox="0 0 280 160" fill="none">
+            <g transform="translate(30, 20)">
+              <rect x="0" y="0" width="220" height="18" rx="3" fill="#1e293b" stroke="#94a3b8" strokeWidth="1" />
+              {[0, 30, 60, 90, 120, 150, 180].map((x, i) => (
+                <polygon key={i} points={`${x},18 ${x + 15},0 ${x + 25},0 ${x + 10},18`} fill="#ffffff" />
+              ))}
+            </g>
+            <rect x="30" y="40" width="220" height="95" rx="6" fill="#090d16" stroke="#3b82f6" strokeWidth="1.5" />
+            <text x="140" y="78" fontSize="28" textAnchor="middle">
+              🌊 🔥 🐅
+            </text>
+            <g transform="translate(45, 95)">
+              <rect x="0" y="0" width="90" height="24" rx="4" fill="#065f46" stroke="#10b981" strokeWidth="1.5" />
+              <text x="45" y="16" fill="#34d399" fontSize="11" fontWeight="900" textAnchor="middle">A) RRR ✓</text>
+              <rect x="100" y="0" width="90" height="24" rx="4" fill="#1f2937" stroke="#4b5563" strokeWidth="1" />
+              <text x="145" y="16" fill="#9ca3af" fontSize="11" fontWeight="bold" textAnchor="middle">B) PUSHPA</text>
+            </g>
+          </svg>
+        </div>
+      )}
+
+      {/* 54. SIMON SAYS */}
+      {gameEngineId === 'simon-says' && (
+        <div className="w-full h-full relative flex items-center justify-center overflow-hidden">
+          <svg className="w-full h-full max-h-[160px]" viewBox="0 0 280 160" fill="none">
+            <circle cx="140" cy="80" r="62" fill="#0f172a" stroke="#334155" strokeWidth="4" />
+            <path d="M 136 76 L 136 24 A 56 56 0 0 0 84 76 Z" fill="#22c55e" className="animate-pulse" />
+            <path d="M 144 76 L 196 76 A 56 56 0 0 0 144 24 Z" fill="#ef4444" opacity="0.6" />
+            <path d="M 144 84 L 144 136 A 56 56 0 0 0 196 84 Z" fill="#3b82f6" opacity="0.6" />
+            <path d="M 136 84 L 84 84 A 56 56 0 0 0 136 136 Z" fill="#eab308" opacity="0.6" />
+            <circle cx="140" cy="80" r="22" fill="#020617" stroke="#64748b" strokeWidth="2" />
+            <text x="140" y="78" fill="#94a3b8" fontSize="7" fontWeight="bold" textAnchor="middle">SEQUENCE</text>
+            <text x="140" y="89" fill="#38bdf8" fontSize="10" fontWeight="900" textAnchor="middle">LVL 08</text>
+          </svg>
+        </div>
+      )}
+
+      {/* 55. MASTERMIND */}
+      {gameEngineId === 'mastermind' && (
+        <div className="w-full h-full relative flex items-center justify-center overflow-hidden">
+          <svg className="w-full h-full max-h-[160px]" viewBox="0 0 280 160" fill="none">
+            <rect x="40" y="25" width="200" height="110" rx="12" fill="#1e1b4b" stroke="#6366f1" strokeWidth="2" />
+            <g transform="translate(60, 48)">
+              <circle cx="20" cy="15" r="10" fill="#ef4444" />
+              <circle cx="50" cy="15" r="10" fill="#3b82f6" />
+              <circle cx="80" cy="15" r="10" fill="#10b981" />
+              <circle cx="110" cy="15" r="10" fill="#f59e0b" />
+              <circle cx="140" cy="10" r="3.5" fill="#000000" stroke="#cbd5e1" strokeWidth="1" />
+              <circle cx="150" cy="10" r="3.5" fill="#000000" stroke="#cbd5e1" strokeWidth="1" />
+              <circle cx="140" cy="20" r="3.5" fill="#ffffff" />
+              <circle cx="150" cy="20" r="3.5" fill="none" stroke="#64748b" strokeWidth="1" />
+            </g>
+            <g transform="translate(60, 85)">
+              <circle cx="20" cy="15" r="10" fill="#a855f7" />
+              <circle cx="50" cy="15" r="10" fill="#3b82f6" />
+              <circle cx="80" cy="15" r="10" fill="#ef4444" />
+              <circle cx="110" cy="15" r="10" fill="#10b981" />
+              <circle cx="140" cy="10" r="3.5" fill="#000000" stroke="#cbd5e1" strokeWidth="1" />
+              <circle cx="150" cy="10" r="3.5" fill="#000000" stroke="#cbd5e1" strokeWidth="1" />
+              <circle cx="140" cy="20" r="3.5" fill="#000000" stroke="#cbd5e1" strokeWidth="1" />
+              <circle cx="150" cy="20" r="3.5" fill="#000000" stroke="#cbd5e1" strokeWidth="1" className="animate-pulse" />
+            </g>
+            <text x="140" y="125" fill="#a5b4fc" fontSize="9" fontWeight="bold" textAnchor="middle">CRACK THE 4-COLOR SECRET CODE</text>
+          </svg>
+        </div>
+      )}
+
+      {/* 56. BULLS AND COWS */}
+      {gameEngineId === 'bulls-and-cows' && (
+        <div className="w-full h-full relative flex items-center justify-center overflow-hidden">
+          <svg className="w-full h-full max-h-[160px]" viewBox="0 0 280 160" fill="none">
+            <g transform="translate(45, 35)">
+              {['4', '0', '7', '2'].map((digit, i) => (
+                <g key={i} transform={`translate(${i * 48}, 0)`}>
+                  <rect width="40" height="52" rx="8" fill="#0f172a" stroke="#f59e0b" strokeWidth="2" />
+                  <text x="20" y="34" fill="#ffffff" fontSize="24" fontWeight="900" textAnchor="middle">{digit}</text>
+                  <line x1="0" y1="26" x2="40" y2="26" stroke="#334155" strokeWidth="1" />
+                </g>
+              ))}
+            </g>
+            <g transform="translate(55, 102)">
+              <rect x="0" y="0" width="80" height="26" rx="6" fill="#78350f" stroke="#d97706" strokeWidth="1.5" />
+              <text x="40" y="17" fill="#fbbf24" fontSize="11" fontWeight="900" textAnchor="middle">🐂 2 BULLS</text>
+              <rect x="90" y="0" width="80" height="26" rx="6" fill="#14532d" stroke="#22c55e" strokeWidth="1.5" />
+              <text x="130" y="17" fill="#86efac" fontSize="11" fontWeight="900" textAnchor="middle">🐄 1 COW</text>
+            </g>
+          </svg>
+        </div>
+      )}
+
+      {/* 57. NONOGRAM */}
+      {gameEngineId === 'nonogram' && (
+        <div className="w-full h-full relative flex items-center justify-center overflow-hidden">
+          <svg className="w-full h-full max-h-[160px]" viewBox="0 0 280 160" fill="none">
+            <g transform="translate(100, 30)">
+              <text x="10" y="-8" fill="#38bdf8" fontSize="9" fontWeight="bold" textAnchor="middle">1</text>
+              <text x="30" y="-8" fill="#38bdf8" fontSize="9" fontWeight="bold" textAnchor="middle">3</text>
+              <text x="50" y="-8" fill="#38bdf8" fontSize="9" fontWeight="bold" textAnchor="middle">5</text>
+              <text x="70" y="-8" fill="#38bdf8" fontSize="9" fontWeight="bold" textAnchor="middle">3</text>
+              <text x="90" y="-8" fill="#38bdf8" fontSize="9" fontWeight="bold" textAnchor="middle">1</text>
+              <text x="-8" y="14" fill="#38bdf8" fontSize="9" fontWeight="bold" textAnchor="end">1</text>
+              <text x="-8" y="34" fill="#38bdf8" fontSize="9" fontWeight="bold" textAnchor="end">3</text>
+              <text x="-8" y="54" fill="#38bdf8" fontSize="9" fontWeight="bold" textAnchor="end">5</text>
+              <text x="-8" y="74" fill="#38bdf8" fontSize="9" fontWeight="bold" textAnchor="end">3</text>
+              <text x="-8" y="94" fill="#38bdf8" fontSize="9" fontWeight="bold" textAnchor="end">1</text>
+              <rect x="0" y="0" width="100" height="100" fill="#0f172a" stroke="#0284c7" strokeWidth="2" />
+              {[0, 20, 40, 60, 80].map((x) =>
+                [0, 20, 40, 60, 80].map((y) => (
+                  <rect key={`${x}-${y}`} x={x} y={y} width="20" height="20" stroke="#1e293b" strokeWidth="1" fill="none" />
+                ))
+              )}
+              <rect x="40" y="0" width="20" height="20" fill="#38bdf8" />
+              <rect x="20" y="20" width="20" height="20" fill="#38bdf8" />
+              <rect x="40" y="20" width="20" height="20" fill="#38bdf8" />
+              <rect x="60" y="20" width="20" height="20" fill="#38bdf8" />
+              <rect x="0" y="40" width="20" height="20" fill="#38bdf8" />
+              <rect x="20" y="40" width="20" height="20" fill="#38bdf8" />
+              <rect x="40" y="40" width="20" height="20" fill="#38bdf8" />
+              <rect x="60" y="40" width="20" height="20" fill="#38bdf8" />
+              <rect x="80" y="40" width="20" height="20" fill="#38bdf8" />
+              <rect x="20" y="60" width="20" height="20" fill="#38bdf8" />
+              <rect x="40" y="60" width="20" height="20" fill="#38bdf8" />
+              <rect x="60" y="60" width="20" height="20" fill="#38bdf8" />
+              <rect x="40" y="80" width="20" height="20" fill="#38bdf8" />
+            </g>
+          </svg>
+        </div>
+      )}
+
+      {/* 60. LOGIC GRID */}
+      {gameEngineId === 'logic-grid' && (
+        <div className="w-full h-full relative flex items-center justify-center overflow-hidden">
+          <svg className="w-full h-full max-h-[160px]" viewBox="0 0 280 160" fill="none">
+            <g transform="translate(60, 35)">
+              <rect x="0" y="0" width="90" height="90" fill="#0f172a" stroke="#8b5cf6" strokeWidth="2" />
+              <line x1="30" y1="0" x2="30" y2="90" stroke="#334155" strokeWidth="1" />
+              <line x1="60" y1="0" x2="60" y2="90" stroke="#334155" strokeWidth="1" />
+              <line x1="0" y1="30" x2="90" y2="30" stroke="#334155" strokeWidth="1" />
+              <line x1="0" y1="60" x2="90" y2="60" stroke="#334155" strokeWidth="1" />
+              <text x="15" y="22" fill="#22c55e" fontSize="16" fontWeight="900" textAnchor="middle">✓</text>
+              <text x="45" y="22" fill="#ef4444" fontSize="16" fontWeight="900" textAnchor="middle">✗</text>
+              <text x="75" y="22" fill="#ef4444" fontSize="16" fontWeight="900" textAnchor="middle">✗</text>
+              <text x="15" y="52" fill="#ef4444" fontSize="16" fontWeight="900" textAnchor="middle">✗</text>
+              <text x="45" y="52" fill="#22c55e" fontSize="16" fontWeight="900" textAnchor="middle">✓</text>
+              <text x="75" y="52" fill="#ef4444" fontSize="16" fontWeight="900" textAnchor="middle">✗</text>
+              <text x="15" y="82" fill="#ef4444" fontSize="16" fontWeight="900" textAnchor="middle">✗</text>
+              <text x="45" y="82" fill="#ef4444" fontSize="16" fontWeight="900" textAnchor="middle">✗</text>
+              <text x="75" y="82" fill="#22c55e" fontSize="16" fontWeight="900" textAnchor="middle">✓</text>
+            </g>
+            <g transform="translate(195, 75)" className="animate-pulse">
+              <circle cx="0" cy="0" r="28" fill="#1e1b4b" stroke="#38bdf8" strokeWidth="3" opacity="0.9" />
+              <line x1="20" y1="20" x2="38" y2="38" stroke="#38bdf8" strokeWidth="5" strokeLinecap="round" />
+              <text x="0" y="8" fontSize="22" textAnchor="middle">🔍</text>
+            </g>
+            <text x="140" y="140" fill="#c4b5fd" fontSize="9" fontWeight="bold" textAnchor="middle">EINSTEIN DEDUCTION MATRIX</text>
+          </svg>
+        </div>
+      )}
+
+      {/* 61. PATTERN RECOGNITION */}
+      {gameEngineId === 'pattern-recognition' && (
+        <div className="w-full h-full relative flex items-center justify-center overflow-hidden">
+          <svg className="w-full h-full max-h-[160px]" viewBox="0 0 280 160" fill="none">
+            <g transform="translate(30, 60)">
+              <circle cx="20" cy="20" r="14" fill="#3b82f6" />
+              <text x="20" y="48" fill="#93c5fd" fontSize="9" fontWeight="bold" textAnchor="middle">1</text>
+              <polygon points="65,8 53,32 77,32" fill="#10b981" />
+              <text x="65" y="48" fill="#6ee7b7" fontSize="9" fontWeight="bold" textAnchor="middle">3</text>
+              <rect x="98" y="8" width="24" height="24" rx="3" fill="#f59e0b" />
+              <text x="110" y="48" fill="#fde68a" fontSize="9" fontWeight="bold" textAnchor="middle">4</text>
+              <polygon points="155,7 167,16 162,31 148,31 143,16" fill="#ec4899" />
+              <text x="155" y="48" fill="#fbcfe8" fontSize="9" fontWeight="bold" textAnchor="middle">5</text>
+              <rect x="188" y="6" width="28" height="28" rx="6" fill="#4f46e5" stroke="#a5b4fc" strokeWidth="2" className="animate-pulse" />
+              <text x="202" y="26" fill="#ffffff" fontSize="18" fontWeight="900" textAnchor="middle">?</text>
+              <text x="202" y="48" fill="#c7d2fe" fontSize="9" fontWeight="bold" textAnchor="middle">IQ</text>
+            </g>
+            <text x="140" y="130" fill="#e0e7ff" fontSize="10" fontWeight="bold" textAnchor="middle">FIND THE NEXT PATTERN IN SEQUENCE</text>
+          </svg>
+        </div>
+      )}
+
       {/* Fallback for other new games */}
-      {!['chess','connect-four','tic-tac-toe','checkers','battleship','othello','dots-and-boxes','gomoku','memory-match','mancala','cyber-trivia','word-clash','rps-strike','hand-cricket','rpsls','nim','matchstick-puzzle','coin-toss','odd-even','higher-lower','guess-number','pallanguzhi','chowka-bara','pachisi','snakes-and-ladders','ludo','carrom','kabaddi','cricket-quiz','antakshari','name-place-animal-thing','truth-or-dare','never-have-i-ever','who-knows-me-best','most-likely-to','two-truths-and-a-lie','would-you-rather','rapid-fire','dumb-charades','guess-the-movie','guess-the-song','guess-the-word','imposter-word','mafia','spyfall','word-chain','wordle','hangman','word-builder','sudoku','minesweeper','lights-out','math-battle','daily-riddle'].includes(gameEngineId) && (
+      {!['chess','connect-four','tic-tac-toe','checkers','battleship','othello','dots-and-boxes','gomoku','memory-match','mancala','cyber-trivia','word-clash','rps-strike','hand-cricket','rpsls','nim','matchstick-puzzle','coin-toss','odd-even','higher-lower','guess-number','pallanguzhi','chowka-bara','pachisi','snakes-and-ladders','ludo','carrom','kabaddi','cricket-quiz','antakshari','name-place-animal-thing','truth-or-dare','never-have-i-ever','who-knows-me-best','most-likely-to','two-truths-and-a-lie','would-you-rather','rapid-fire','dumb-charades','guess-the-movie','guess-the-song','guess-the-word','imposter-word','mafia','spyfall','word-chain','wordle','hangman','word-builder','anagrams','unscramble','last-letter','alphabet-categories','forbidden-word','rhyme-battle','sentence-builder','emoji-movie-guess','sudoku','minesweeper','simon-says','mastermind','bulls-and-cows','nonogram','lights-out','math-battle','logic-grid','pattern-recognition','daily-riddle'].includes(gameEngineId) && (
         <div className="w-full h-full relative flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-tr from-indigo-900/40 via-purple-900/30 to-cyan-900/40" />
           <div className="relative text-center p-4">

@@ -1,9 +1,10 @@
 // client/src/components/home/GameCard.tsx
 import React from 'react';
-import { Users, Clock, Zap } from 'lucide-react';
+import { Users, Zap } from 'lucide-react';
 import { CanvaGameItem } from '../../data/games';
 import { sound } from '../../services/sound';
 import { AnimatedGameArtwork } from './AnimatedGameArtwork';
+import { getGameGenre, getPlayerCountBadge } from '../../utils/gameCategories';
 
 interface GameCardProps {
   item: CanvaGameItem;
@@ -11,11 +12,15 @@ interface GameCardProps {
 }
 
 export const GameCard: React.FC<GameCardProps> = ({ item, onSelect }) => {
+  const genre = getGameGenre(item.gameEngineId);
+  const playerCount = getPlayerCountBadge(item.meta);
+  const GenreIcon = genre.icon;
+
   return (
     <article
       onClick={() => { onSelect(item); sound.play('click'); }}
       className="game-card group"
-      data-category={item.category}
+      data-category={genre.name}
       data-game={item.title}
       style={{
         background: '#151a32',
@@ -37,7 +42,7 @@ export const GameCard: React.FC<GameCardProps> = ({ item, onSelect }) => {
           <span
             className="category-label"
             style={{
-              color: '#81e7ee',
+              color: genre.color,
               fontWeight: 700,
               fontSize: '11px',
               textTransform: 'uppercase',
@@ -45,7 +50,7 @@ export const GameCard: React.FC<GameCardProps> = ({ item, onSelect }) => {
               display: 'inline-block'
             }}
           >
-            {item.category} ▶
+            {genre.name} ▶
           </span>
           <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-950/80 border border-purple-500/30 text-purple-300">
             PvP & Bot
@@ -78,13 +83,20 @@ export const GameCard: React.FC<GameCardProps> = ({ item, onSelect }) => {
           </p>
         )}
 
-        {/* Feature Badges Strip (replacing the old mock likes/playing) */}
+        {/* Feature Badges Strip (dynamic Player Count and Category Genre) */}
         <div className="flex items-center flex-wrap gap-1.5 mb-4 text-[11px] font-semibold text-[#8e97b8]">
           <span className="flex items-center gap-1 bg-[#1a213f] px-2 py-0.5 rounded-md text-[#81e7ee] border border-white/5">
-            <Users className="w-3 h-3 text-[#81e7ee]" /> 2 Players
+            <Users className="w-3 h-3 text-[#81e7ee]" /> {playerCount}
           </span>
-          <span className="flex items-center gap-1 bg-[#1a213f] px-2 py-0.5 rounded-md text-[#c084fc] border border-white/5">
-            <Clock className="w-3 h-3 text-[#c084fc]" /> 30s Turn
+          <span
+            className="flex items-center gap-1 px-2 py-0.5 rounded-md border"
+            style={{
+              color: genre.color,
+              backgroundColor: genre.bgColor,
+              borderColor: genre.borderColor
+            }}
+          >
+            <GenreIcon className="w-3 h-3" style={{ color: genre.color }} /> {genre.name}
           </span>
           <span className="flex items-center gap-1 bg-[#1a213f] px-2 py-0.5 rounded-md text-[#f472b6] border border-white/5">
             <Zap className="w-3 h-3 text-[#f472b6]" /> Ranked

@@ -10,22 +10,18 @@ export const PromoBanner: React.FC<PromoBannerProps> = ({ onPlayWithFriends }) =
   return (
     <section
       id="multiplayer"
-      className="promo"
+      className="promo flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6"
       aria-labelledby="promo-title"
       style={{
-        margin: '28px auto 83px',
-        padding: '47px 56px',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        gap: '32px',
-        borderRadius: '24px',
+        margin: '28px auto 70px',
+        padding: '36px 44px',
+        borderRadius: '22px',
         border: '1px solid rgba(167, 122, 255, 0.45)',
         background: 'radial-gradient(circle at 75% 60%, rgba(118, 69, 170, 0.47), transparent 42%), linear-gradient(120deg, rgb(35, 32, 74), rgb(18, 27, 56))',
         boxShadow: '0 18px 60px rgba(5, 6, 24, 0.47)'
       }}
     >
-      <div>
+      <div style={{ flex: 1, minWidth: 0 }}>
         <p
           className="eyebrow"
           style={{
@@ -37,44 +33,47 @@ export const PromoBanner: React.FC<PromoBannerProps> = ({ onPlayWithFriends }) =
             margin: '0 0 6px'
           }}
         >
-          BETTER TOGETHER
+          SQUAD CLASH · BETTER TOGETHER
         </p>
         <h2
           id="promo-title"
           style={{
             color: '#f7f7ff',
             fontWeight: 800,
-            fontSize: 'clamp(26px, 3.2vw, 38px)',
-            letterSpacing: '-0.06em',
-            margin: '7px 0 0'
+            fontSize: 'clamp(22px, 2.6vw, 32px)',
+            letterSpacing: '-0.05em',
+            margin: '4px 0 0'
           }}
         >
-          Good games. Great company.
+          Assemble The Squad. Settle The Beef.
         </h2>
         <p
           style={{
-            maxWidth: '530px',
             color: '#c7c5dd',
-            lineHeight: 1.65,
-            margin: '12px 0 0',
-            fontSize: '15px'
+            lineHeight: 1.6,
+            margin: '8px 0 0',
+            fontSize: '14.5px',
+            maxWidth: '720px'
           }}
         >
-          The best moments are the ones you share. Generate 1-click private party room codes and battle your friends in real-time under strict 30-second move clocks!
+          Drop an instant 1-click room code in your squad chat and find out who's actually cracked and who was getting carried. Strict 30-second blitz turn clocks—zero stalling, zero excuses, pure chaotic fun!
         </p>
       </div>
 
       <button
         type="button"
         onClick={() => { onPlayWithFriends(); sound.play('match'); }}
-        className="primary-cta"
+        className="primary-cta flex-shrink-0"
         style={{
           whiteSpace: 'nowrap',
           background: '#b394ff',
           borderColor: '#b394ff',
           color: '#100f28',
           fontWeight: 800,
-          fontSize: '15px'
+          fontSize: '15px',
+          padding: '13px 26px',
+          borderRadius: '13px',
+          cursor: 'pointer'
         }}
       >
         <span>Play With Friends</span>

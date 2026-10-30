@@ -22,6 +22,7 @@ import {
 } from './types';
 import { getStoredProfile } from './services/storage';
 import { getSocket } from './services/socket';
+import { getGameGenre } from './utils/gameCategories';
 
 export const App: React.FC = () => {
   const [profile, setProfile] = useState<UserProfile>(getStoredProfile);
@@ -145,7 +146,8 @@ export const App: React.FC = () => {
   const filteredCanvaGames = activeCategory
     ? CANVA_GAMES.filter(g =>
       g.category.toLowerCase() === activeCategory.toLowerCase() ||
-      g.categories?.some(c => c.toLowerCase() === activeCategory.toLowerCase())
+      g.categories?.some(c => c.toLowerCase() === activeCategory.toLowerCase()) ||
+      getGameGenre(g.gameEngineId).name.toLowerCase() === activeCategory.toLowerCase()
     )
     : CANVA_GAMES;
 
